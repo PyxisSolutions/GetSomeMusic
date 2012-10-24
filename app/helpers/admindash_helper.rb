@@ -1,0 +1,2 @@
+module AdmindashHelper
+end
