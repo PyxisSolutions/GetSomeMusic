@@ -15,6 +15,6 @@
   </tr>
   <% end %>
 </table>
-<%= form_for current_user.purchases, :remote => true, :url => { :controller => "purchases", :action => "displayall" } do |f| %>
+<%#= form_for current_user.purchases, :remote => true, :url => { :controller => "purchases", :action => "displayall" } do |f| %>
 <% end %>
 <button id="btnAllSongs" class="btn btn-large btn-block btn-info" onclick="displayAllSongs();">Load all my songs</button>
