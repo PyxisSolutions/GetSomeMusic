@@ -3,19 +3,7 @@
 <h4>My songs<small style="padding-left:20px;">Total songs bought: <%= current_user.purchases.count %></small></h4>
 <table class="table table-hover" id="usrSongs">
   <tr class="info"><td>Band</td><td>Song</td><td>Price</td><td>Purchased</td><td>Download</td></tr>
-  <% if !current_user.purchases.first.nil? %>
-    <% current_user.purchases.last(5).each do |p| %>
-    <tr>
-      <% @song = Song.find(p.song_id) %>
-      <td><%= @song.band.name %></td>
-      <td><%= @song.name %></td>
-      <td>£ <%= number_with_precision((p.value.to_d / 100), :precision => 2) %></td>
-      <td><%= p.created_at.strftime("%d %b %Y") %></td>
-      <td><%= link_to 'Download', home_download_path(:sid => @song.id) %></td>
-      <%#= link_to 'Del', [current_user, p], :method => :delete  %> 
-    </tr>
-    <% end %>
-  <% end %>
+  
 </table>
 <%= form_for current_user.purchases, :remote => true, :url => { :controller => "purchases", :action => "displayall" } do |f| %>
 <% end %>
