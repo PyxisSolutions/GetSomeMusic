@@ -10,7 +10,7 @@
 </div>
 
 <div id="songs">
-  <% if !Songs.first.nil? %>
+  <% if !Song.first.nil? %>
     <table class="table table-striped">
       <tr class="info">
         <td>Band Name</td>
@@ -33,7 +33,7 @@
 </div>
 
 <div>
-  <% if !Albul.last.nil? %>
+  <% if !Album.last.nil? %>
   <% @first_album = Album.last %>
   <div class="album">
     <div onclick="innerAlbumToggle();">
