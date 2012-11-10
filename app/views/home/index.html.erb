@@ -7,14 +7,14 @@
 </div>
 
 <div id="songs">
+  <table class="table table-striped">
+    <tr class="info">
+      <td>Band Name</td>
+      <td>Track Name</td>
+      <td>Price</td>
+      <td>View</td>
+    </tr>  
   <% if !Song.first.nil? %>
-    <table class="table table-striped">
-      <tr class="info">
-        <td>Band Name</td>
-        <td>Track Name</td>
-        <td>Price</td>
-        <td>View</td>
-      </tr>  
     <% Song.all.reverse.each do |track| %>
     <tr>
       <td><%= track.band.name %></td>
@@ -25,8 +25,8 @@
       <% end %>
     </tr>
     <% end %>
-    </table>
   <% end %>
+  </table>
 </div>
 
 <div>
