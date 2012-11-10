@@ -10,27 +10,30 @@
 </div>
 
 <div id="songs">
-  <table class="table table-striped">
-    <tr class="info">
-      <td>Band Name</td>
-      <td>Track Name</td>
-      <td>Price</td>
-      <td>View</td>
+  <% if !Songs.first.nil? %>
+    <table class="table table-striped">
+      <tr class="info">
+        <td>Band Name</td>
+        <td>Track Name</td>
+        <td>Price</td>
+        <td>View</td>
+      </tr>  
+    <% Song.all.reverse.each do |track| %>
+    <tr>
+      <td><%= track.band.name %></td>
+      <td><%= track.name %></td>
+      <td><%= number_with_precision(track.cost.to_f / 100, :precision => 2) %></td>
+      <% if user_signed_in? %>
+        <td><a href="/songs/<%= track.id %>"><%= image_tag '/assets/eye.png', :size => "35x30", :id => "show" %></a></td>
+      <% end %>
     </tr>
-  <% Song.all.reverse.each do |track| %>
-  <tr>
-    <td><%= track.band.name %></td>
-    <td><%= track.name %></td>
-    <td><%= number_with_precision(track.cost.to_f / 100, :precision => 2) %></td>
-    <% if user_signed_in? %>
-      <td><a href="/songs/<%= track.id %>"><%= image_tag '/assets/eye.png', :size => "35x30", :id => "show" %></a></td>
     <% end %>
-  </tr>
+    </table>
   <% end %>
-</table>
 </div>
 
 <div>
+  <% if !Albul.last.nil? %>
   <% @first_album = Album.last %>
   <div class="album">
     <div onclick="innerAlbumToggle();">
@@ -56,6 +59,7 @@
       <button class="btn btn-success">Purchase album</button>
     </div>
   </div>
+  <% end %>
 </div><br/>
 
 <a href="#myModal" role="button" class="btn btn-success" data-toggle="modal">Purchase music credits</a>
