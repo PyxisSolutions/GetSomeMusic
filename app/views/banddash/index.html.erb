@@ -1,1 +1,153 @@
-<h2>Welcome to your Band's dashboard</h2>
+<h2>Your Band's dashboard</h2>
+<h1><% if !current_user.band.nil? %><%= current_user.band.subscription.created_at %><%end%></h1>
+<div>
+  <% if current_user.band.nil? %>
+    <% @band = Band.new %>
+    <%= form_for @band, :url => { :action => "create" } do |f| %>
+      <%= f.text_field :name, :placeholder => "Band Name" %><br/>
+      <%= f.text_field :members, :placeholder => "Number of members" %><br/>
+      Individual artist? <%= f.check_box :individual_artist %><br/>
+      <%= f.submit 'Create Band', :class => "btn btn-success", :style => 'margin-top:7px;'%>  
+    <% end %>
+  <% else %>
+    <div class="alert alert-success">
+      <button type="button" class="close" data-dismiss="alert">×</button>
+        <form id="updateBand" style="display:none">
+          <div class="input-prepend">
+            <span class="add-on" style="color:#669">Band Name</span>
+            <input class="span2" id="prependedInput" size="16" type="text" placeholder="<%= current_user.band.name %>">
+          </div>
+          <div class="input-prepend">
+            <span class="add-on" style="color:#669">Band Members</span>
+            <input class="span2" id="prependedInput" size="16" type="text" placeholder="<%= current_user.band.members %>">
+          </div>
+          <button class="btn btn-warning" type="button">Update band</button>
+          <button type="button" onclick="bandAllowUpdate();" class="btn btn-danger">Cancel</button> 
+        </form>
+        <div id="bandDetails">
+          Band ID: <%= current_user.band.id %><br/>
+          Band name: <%= current_user.band.name %><br/>
+          Songs published: <%= Band.find(current_user.band.id).songs.size %><br/>
+          <button style="margin-top:7px;" onclick="bandDetailShow();" class="btn btn-warning">Edit band details</button>    
+        </div>
+    </div>
+  <% end %>
+</div><br/>
+
+<% if !current_user.band.nil? %>
+  <%= form_for Transaction.new do |f| %>
+    <%= f.hidden_field :sub, :value => 'q4DaFUbr' %>
+    <button type="submit" class="btn btn-success">Subscribe (3 months)</button>
+  <% end %>
+<% end %>
+
+<% if !current_user.band.nil? %>
+  <div>
+    <h3>Tracks</h3>
+    <table class="table table-striped">
+      <tr class="info">
+        <td>Track Name</td>
+        <td>Sales (#)</td>
+        <td>Edit</td>
+        <td>Delete</td>
+        <td/>
+      </tr>
+      <% current_user.band.songs.each do |track| %>    
+      <tr>
+        <td><%= track.name %></td>
+        <td><%= track.sales %></td>
+        <td><%= link_to 'Edit', edit_song_path(track), :class => 'btn btn-warning', :style => 'margin:0px;padding:0px 10px' %></td>
+        <td><%= link_to 'Delete', track, :method => :delete, :confirm => "Are you sure?" ,:class => 'btn btn-danger', :style => 'margin:0px;padding:0px 10px' %></td>
+        <td>
+          <div style="max-height: 19px;overflow: hidden">
+            <%= form_for [current_user, current_user.purchases.build] do |f| %>
+              <%= f.hidden_field :value, :value => track.cost %>
+              <%= f.hidden_field :song_id, :value => track.id %>
+              <%= f.submit 'Purchase song', :class => "btn btn-link", :style => 'margin:0px;padding:0px;' %>  
+            <% end %>
+          </div>
+        </td>
+      </tr>
+      <% end %>
+    </table>
+    <button id="btnTrack" style="margin-bottom:10px;" class="btn btn-success" onclick="btnTrack();">Create a new track</button>
+    <div id="newTrack" style="display:none;">
+      <%= form_for Song.new, :html => { :multipart => true } do |f| %>
+        <%= f.text_field :name, :placeholder => "Song name" %><br/>
+        <%= f.text_field :cost, :placeholder => "Cost ( £ )" %><br/>
+        <%= f.text_field :tag_list, :placeholder => "Tags, separated by commas" %><br/>
+        mp3 file: <%= f.file_field :mp3 %><br/>
+        <%= f.submit 'Upload new track', :class => "btn btn-success" %>&nbsp;&nbsp;
+        <button type="button" class="btn btn-danger" onclick="newTrack();">Cancel</button>
+      <% end %>
+    </div>
+  </div>
+<% end %><br/><br/><br/>
+
+<h3>Albums<small style="margin-left:20px;">click the album titles to show/hide their contents</small></h3>
+<% @temp_song = Song.new %>
+<% current_user.albums.each do |album| %>
+  <div id="album<%= album.id %>" class="album" onclick="$('#albumInner<%= album.id %> ').slideToggle();">
+    <div class="albumArt"><% if !album.coverart.content_type.nil? %><%= image_tag album.coverart.url, :size => "40x40" %>&nbsp;<% end %></div>
+    <h4><%= album.name %></h4>
+    <div id="albumInner<%= album.id %>" style="display:none;">
+      <div>
+        <table class="table">
+        <% album.songs.each do |track| %>
+          <tr><td><%= track.name %><td/><tr/>
+        <% end %>
+        </table>
+      </div>
+      <div>
+        <%= form_for @temp_song, :url => url_for(:controller => 'songs', :action => 'update'), :html=>{:method=>:put} do |sf| %>
+          <select name="song[id]">
+            <% current_user.band.songs.each do |current_song| %>
+            <option name="id2" value="<%= current_song.id %>"><%= current_song.name %></option>
+            <% end %>
+          </select>
+          <%= sf.hidden_field :album_id, :value => album.id %>
+          <%= sf.submit 'Add song to album', :class => "btn btn-success", :style => "margin-left:20px;margin-top:-9px" %>
+        <% end %> 
+      </div>
+    </div>
+  </div><br/>
+<% end %>
+
+<% if !current_user.band.nil? %>
+  <div id="addAlbum">
+    <h4>Create a new album</h4>
+    <% @album = Album.new %>
+    <%= form_for(@album, :html => { :multipart => true }) do |f| %>
+      <% if @album.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(@album.errors.count, "error") %> prohibited this album from being saved:</h2>
+          <ul>
+          <% @album.errors.full_messages.each do |msg| %>
+            <li><%= msg %></li>
+          <% end %>
+          </ul>
+        </div>
+      <% end %>
+      <%= f.text_field :name, :placeholder => "Album name" %>
+      <%= f.submit 'Create album', :class => "btn btn-success", :style => "margin-left:20px;margin-top:-7px" %><br/>
+      Album Cover: <%= f.file_field :coverart %>
+      <%= f.hidden_field :band_id, :value => current_user.band.id %>
+      <%= f.hidden_field :user_id, :value => current_user.id %>
+    <% end %>
+  </div>
+<% end %><br/>
+
+<%# TODO %>
+<%#*Albums: <%= current_user.albums.count %>
+<%#*Purchases: <%= current_user.purchases.count %>
+<%# current_user.purchases.each do |p| %>
+  <%#*id:<%= p.id %>
+  <%#*user:<%= p.user_id %>
+  <%#*Song:<%= p.song_id %>
+  <%#*value:<%= p.value %>
+  <%#= link_to 'Del', [current_user, p], :method => :delete  %>
+  <%#*<br/>%>
+  <%#*<br/><br/>DEBUG:<br/>isband?: <%= !current_user.band.individual_artist %>
+  <%#= link_to 'WONT_BE_ABLE_TO_DEL_BAND_LATER', :controller => :banddash, :action => :destroy %>
+<%# end %>
+  

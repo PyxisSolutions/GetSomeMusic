@@ -1,0 +1,12 @@
+<h1>Editing song</h1>
+
+<br/><div>
+  <h4>Song name: <%= @song.name %> | Price: <%= @song.cost %><br/></h4>
+</div>
+
+<%= form_for(@song) do |f| %>
+  <%= f.hidden_field :id, :value => @song.id %>
+  <%= f.text_field :name, :value => '', :placeholder => 'Song name' %><br/>
+  <%= f.text_field :cost, :value => '', :placeholder => 'Song price  ( £ )' %><br/>
+  <%= f.submit 'Update', :class => "btn btn-warning" %>
+<% end %>

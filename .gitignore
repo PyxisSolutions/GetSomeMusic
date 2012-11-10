@@ -9,3 +9,4 @@ README.rdoc
 
 #mac-related
 .DS_Store
+/nbproject/private/

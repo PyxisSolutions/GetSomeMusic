@@ -1,3 +1,21 @@
-// Place all the styles related to the banddash controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
+.album
+{
+    border:solid 1px #DEDEDE; 
+    background:#EFEFEF;
+    color:#222222;
+    padding:4px;
+    text-align:center;
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    -khtml-border-radius: 10px;
+    border-radius: 10px;
+    border:1px solid black;
+    -moz-box-shadow: 5px 5px 5px #888;
+    -webkit-box-shadow: 5px 5px 5px #888;
+    -o-box-shadow: 5px 5px 5px #888;
+    -ms-box-shadow: 5px 5px 5px #888;
+    box-shadow: 5px 5px 5px #888;
+    padding:10px;
+}
+.albumArt
+{float:left;width:100px;margin-right:-100px;}

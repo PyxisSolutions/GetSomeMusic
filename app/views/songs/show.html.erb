@@ -1,0 +1,27 @@
+<div style="margin-top:10px;float:right;min-width:100px;">
+  <h5>Tags:</h5>
+  <% @song.tag_list.each do |tag| %>
+    <%= tag %><br/>
+  <% end %>
+</div>
+<h2><%= @song.name %></h2>
+<h2 style="margin-top:-25px;"><small><%= @song.band.name %></small></h2>
+<p>
+  Downloaded <%= Purchase.where(:song_id => @song.id).count %> times<br/>
+  Size: <%= (@song.mp3_file_size / 1048576) %> Mb<br/>
+  Released <%= time_ago_in_words(@song.created_at) %> ago<br/>
+  Price: £<%= number_with_precision((@song.cost.to_d / 100), :precision => 2) %>
+</p>
+<br/>
+
+<% if Purchase.where(:song_id => @song.id, :user_id => current_user.id)  %>
+  <%= link_to 'Download', home_download_path(:sid => @song.id), :class => "btn btn-info", :style => 'margin-top:-10px;' %>
+  <%= link_to 'Back Home', root_path, :style => 'margin-left:20px;font-size:20px' %>
+<% else %>
+  <%= form_for [current_user, current_user.purchases.build] do |f| %>
+    <%= f.hidden_field :song_id, :value => @song.id %>
+    <%= f.submit 'Purchase', :class => "btn btn-success", :style => 'margin-top:-10px;' %>  
+    <%= link_to 'Back Home', root_path, :style => 'margin-left:20px;font-size:20px' %>
+  <% end %>
+<% end %>
+

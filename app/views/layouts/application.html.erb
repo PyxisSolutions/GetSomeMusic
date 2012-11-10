@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title><%= yield(:title) || " Get some music ♫" %></title>
+  <title><%= yield(:title) + " Get some music ♫" %></title>
   <%= stylesheet_link_tag    "application", :media => "all" %>
   <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
@@ -9,49 +9,31 @@
 </head>
 <body>
   <div class="container">
-    <div>
-      <div class="navbar navbar-inverse">
-        <div class="navbar-inner"><br/>
-          <div class="container">
-            <div class="row">
-              <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-              </a>
-              <div class="span3">
-                <strong><a class="brand" style="font-size:40px;" href="/">♫</a></strong>
-              </div>
-              <div class="nav-collapse">
-                <a href="#">Ahref</a>
-                <a href="#">Ahref</a>
-                <a href="#">Ahref</a>
-              </div>
-            </div>
-          </div><br/>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container" style="padding:22px 20px">
+          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
+          </a>
+          <a class="brand" style="padding-right:250px;" href="#">♫</a>
+          <div class="nav-collapse collapse">
+            <ul class="nav">
+              <li><%= link_to "Home",  root_path %></li>
+              <% if user_signed_in? %>
+                <% if current_user.try(:admin?) %><li><%= link_to "Admin Dashboard", admindash_index_path %></li><% end %>
+                <% if current_user.role == "user" %><li><%= link_to "Dashboard", userdash_index_path %></li>
+                <% else %><li><%= link_to "Dashboard", banddash_index_path %></li><% end %>
+                <li><%= link_to "Sign out",  destroy_user_session_path, :method => :delete %></li><br/>
+              <% else %>
+                <li><%= link_to "Sign in", new_user_session_path %></li>
+                <li><%= link_to "Sign up",  new_user_registration_path %></li>
+              <% end %>
+            </ul>
+          </div>
         </div>
       </div>
     </div>
-    
-    <div class="row" id="menu">
-      <div class="span3"></div>
-      <div class="span6">
-        <%= link_to "Home",  "/" %>
-
-        <% if user_signed_in? %>
-          <% if current_user.role == "user" %>
-            <%= link_to "Dashboard", userdash_index_path %>
-          <% else %>
-            <%= link_to "Dashboard", banddash_index_path %>
-          <% end %>
-          <%= link_to "Sign out",  destroy_user_session_path, :method => :delete %><br/>
-          Signed in as <%= current_user.email %>, you have the role of <%= current_user.role %>.  
-        <% else %>
-          <%= link_to "Sign in", new_user_session_path %> or you can 
-          <%= link_to "Sign up",  new_user_registration_path %>
-        <% end %>
-      </div>
-    </div>
+    <br/>
     
     <div class="row" id="warnings">
       <div class="span3"></div>
@@ -61,21 +43,71 @@
         <div class="alert">
           <button type="button" class="close" data-dismiss="alert">×</button>
           <% flash.each do | name, msg| %>
-            <%= content_tag :div, msg, :id => "flash_#{name}" %></div> 
+            <%= content_tag :div, msg, :id => "flash_#{name}" %>
           <% end %>
         </div> 
         <% end %>
+      </div> 
     </div>
     </div>
     
     <div class="row" >
-      <div class="span3"></div>
-      <div class="span6 hero-unit">
+      <div class="span3">
+        <div style="padding-left:10px;" class="accordion" id="accordion">
+          
+          <div class="accordion-group">
+            <div class="accordion-heading">
+              <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+                Collapsible Group Item #1
+              </a>
+            </div>
+            <div id="collapseOne" class="accordion-body collapse in">
+              <div class="accordion-inner">
+                Anim pariatur cliche...
+              </div>
+            </div>
+          </div>
+          
+          <div class="accordion-group">
+            <div class="accordion-heading">
+              <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
+                Collapsible Group Item #2
+              </a>
+            </div>
+            <div id="collapseTwo" class="accordion-body collapse">
+              <div class="accordion-inner">
+                Anim pariatur cliche...
+              </div>
+            </div>
+          </div>
+          
+          <div class="accordion-group">
+            <div class="accordion-heading">
+              <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseThree">
+                My Credits
+              </a>
+            </div>
+            <div id="collapseThree" class="accordion-body collapse">
+              <div class="accordion-inner">
+                <% if user_signed_in? %>
+                I have <%= current_user.credit.count %> credits<br/>
+                
+                <small>To buy more go to our <a href="/">home page</a> and click
+                  'Purchase Music Credits' near the bottom of the page</small>
+                <% else %>
+                Log-in to be able to purchase credits and songs!
+                <% end %>
+              </div>
+            </div>
+          </div>
+          
+        </div>
+      </div>
+      <div class="span5 hero-unit">
         <%= yield %>
       </div>
       <div class="span3"></div>
     </div>
-    
   </div>
 </body>
 </html>

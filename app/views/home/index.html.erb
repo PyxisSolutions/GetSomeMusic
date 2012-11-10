@@ -1,2 +1,100 @@
-<h2>Welcome to the home page of our music site</h2>
-<%#= current_user.update_attribute :role, "user" %>
+<h1 style="margin-top:-40px;">Home page <small style="font-size: 30px">Welcome!</small></h1>
+<div style="margin: 20px 0px;" class="navbar-search pull-left">
+  <input id="srchField" type="text" style="margin-top: -7px;" class="search-query" placeholder="Search">
+  <label id="searchTips" style="position:relative;float:right;display:none;">
+    <h6 style="padding-left:10px;margin-top:-25px;">Search by Track name OR tags</h6></label>
+</div><br/>
+
+<div><br/><br/><br/><br/><h1><%= Date.today.to_time.advance(:months => 3).to_date %></h1>
+<%= Time.now %>
+</div>
+
+<div id="songs">
+  <table class="table table-striped">
+    <tr class="info">
+      <td>Band Name</td>
+      <td>Track Name</td>
+      <td>Price</td>
+      <td>View</td>
+    </tr>
+  <% Song.all.reverse.each do |track| %>
+  <tr>
+    <td><%= track.band.name %></td>
+    <td><%= track.name %></td>
+    <td><%= number_with_precision(track.cost.to_f / 100, :precision => 2) %></td>
+    <% if user_signed_in? %>
+      <td><a href="/songs/<%= track.id %>"><%= image_tag '/assets/eye.png', :size => "35x30", :id => "show" %></a></td>
+    <% end %>
+  </tr>
+  <% end %>
+</table>
+</div>
+
+<div>
+  <% @first_album = Album.last %>
+  <div class="album">
+    <div onclick="innerAlbumToggle();">
+      <div class="albumArt"><% if !@first_album.coverart.content_type.nil? %>
+          <%= image_tag @first_album.coverart.url, :size => "45x45" %>&nbsp;
+        <% end %>
+      </div>
+      <h4><%= @first_album.band.name %> - <%= @first_album.name %></h4>
+      <small>Click to display details.</small>
+    </div>
+    <div id="albumInner" style="display:none;"><br/>
+      <% @album_cost = 0 %>
+      <table class="table">
+        <tr class="info"><td>Track</td><td>Downloads</td></tr>  
+        <% @first_album.songs.each do |track| %>
+          <tr><td><%= track.name %><td/><%= Purchase.where(:song_id => track.id).size %><tr/>
+          <% if !track.cost.nil? %>
+            <% @album_cost += track.cost %>
+          <% end %>
+        <% end %>
+      </table>
+      <span class="label label-info" style="float:left;padding:8px 10px;font-size:18px;">Album cost: <%= @album_cost %> credits</span>
+      <button class="btn btn-success">Purchase album</button>
+    </div>
+  </div>
+</div><br/>
+
+<a href="#myModal" role="button" class="btn btn-success" data-toggle="modal">Purchase music credits</a>
+<img src="/assets/info.png" alt="Smiley face" width="25" height="25" onclick="infoCredit();"/>
+<br/><br/>
+<div style="display:none;" id="infoPurchase" class="alert alert-info">
+  <button type="button" class="close" onclick="$('#infoPurchase').slideUp()">×</button>
+  <h3>The credit system</h3>
+  <p>
+    To make buying songs on our website easier, we've created a <strong>simple</strong> credits system.
+    You can buy credits through paypal by clicking the <strong>Purchase music credits</strong> button above.
+    After you have sufficient credits you can purchase songs and albums.
+    </br>Easy!
+  </p>
+</div>
+
+<div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="myModalLabel">Select a package by clicking on it.</h3>
+  </div>
+  <div class="modal-body">
+    <table width="350" class="table table-hover">
+      <tr onclick="$('#transaction_credit').val(1);" class="buyRow"><td>1 credit</td><td>Typically 1 song<td></tr>
+      <tr onclick="$('#transaction_credit').val(5);" class="buyRow"><td>5 credits</td><td>Typically 5 songs<td></tr>
+      <tr onclick="$('#transaction_credit').val(10);" class="buyRow"><td>10 credits</td><td>Typically 11 songs</td><td><small>1 credit as gift</small></td></tr>
+      <tr onclick="$('#transaction_credit').val(50);" class="buyRow"><td>50 credits</td><td>Typically 55 songs</td><td><small>5 credits as gift</small></td></tr>
+    </table>
+  </div>
+  <div class="modal-footer">
+    <% if user_signed_in? %>  
+      <%= form_for Transaction.new do |f| %>
+        <%= f.hidden_field :credit, :value => 0 %>
+        <button type="submit" class="btn btn-success">Buy credits</button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal" aria-hidden="true">Close</button>
+      <% end %>
+    <% else %>
+        <strong>Sign in to purchase credits.</strong>
+    <% end %>
+    <br/>
+  </div>
+</div>

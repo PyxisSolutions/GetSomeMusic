@@ -1,15 +1,37 @@
-<h2>Welcome to the Admin dashboard</h2>
+<h2>Admin dashboard <small>Statistics & Users</small></h2><hr/></hr>
 
-<ul
-<% User.all.each do |usr| %>
-    <li><%= usr.id %></li>
-<% end %>
+<h3>All users</h3>
+<table style="width:100%" class="table table-striped">
+  <tr class="info"><td>UID</td><td>Email</td><td>Money Spent</td><td></td></tr>
+  <% User.all.each do |user| %>
+    <tr>
+      <td><%= user.id %></td>
+      <td><%= user.email %></td>
+      <% @totalspent = 0 %><% Purchase.where(:user_id => user.id).each do |p|%><% @totalspent += p.company_profit %><% end %>
+      <td>£ <%= number_with_precision((@totalspent.to_d / 100), :precision => 2) %> (<%= Purchase.where(:user_id => user.id).size %>)</td>
+      <td></td>
+    </tr>
+  <% end %>
+</table>
 
-  <%= link_to 'Destroy', user_registration_path, :confirm => 'Are you sure you want to destroy your account?', :method => :delete %>
-</ul>
 
-<%  if current_user.try(:admin?) %>
-<h1>You are an admin!</h1>
-<% else %>
-<h1>Aint no admin anymore</h1>
-<%  end %>
+<h3>Top selling bands</h3>
+<div class="alert alert-error" <% if (Band.all.count > 5) %><%= " style=display:none;" %><% end %>>
+  <button type="button" class="close" data-dismiss="alert">×</button>
+  <h3 style="font-weight: 300">We need more bands!</h3>
+  <p style="font-size: 16px; font-weight: 300">
+    There are less than <strong>5</strong> bands registered for your website.<br/>
+    All the bands will be displayed in the below list until more than 5 bands have registered 
+    (after which this warning will go away!)
+  </p>
+</div>
+<table style="width:100%" class="table table-striped">
+  <tr class="info"><td>Band Name</td><td>Songs sold</td><td>Earned Us</td></tr>
+  <% Band.find(:all, :order => ":earned_company desc", :limit => 5).each do |band| %>
+    <tr>
+      <td><%= band.name %></td>
+      <td><%= band.songs_sold %></td>
+      <td>£<%= number_with_precision((band.earned_company.to_d / 100), :precision => 2)  %></td>
+    </tr>
+  <% end %>
+</table>
