@@ -5,7 +5,7 @@ class CreateBands < ActiveRecord::Migration
       t.string :name
       t.integer :members
       t.boolean :individual_artist
-      t.string :avatar
+      #t.string :avatar
 
       t.timestamps
     end
