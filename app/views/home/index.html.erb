@@ -4,7 +4,7 @@
   <label id="searchTips" style="position:relative;float:right;display:none;">
     <h6 style="padding-left:10px;margin-top:-25px;">Search by Track name OR tags</h6></label>
 </div><br/>
-</div>
+
 
 <div id="songs">
   <table class="table table-striped">
@@ -57,10 +57,11 @@
     </div>
   </div>
   <% end %>
-</div><br/>
+</div>
+<br/>
 
 <a href="#myModal" role="button" class="btn btn-success" data-toggle="modal">Purchase music credits</a>
-<img src="/assets/info.png" alt="Smiley face" width="25" height="25" onclick="infoCredit();"/>
+<img src="/assets/info.png" width="25" height="25" onclick="infoCredit();"/>
 <br/><br/>
 <div style="display:none;" id="infoPurchase" class="alert alert-info">
   <button type="button" class="close" onclick="$('#infoPurchase').slideUp()">×</button>
