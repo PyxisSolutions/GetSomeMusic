@@ -15,6 +15,7 @@ gem 'twitter-bootstrap-rails'
 gem 'jquery-rails'
 gem 'acts-as-taggable-on', '~> 2.3.1'
 gem 'thin'
+gem 'paperclip-dropbox'
 
 group :development, :test do
   gem 'sqlite3'

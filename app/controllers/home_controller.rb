@@ -1,4 +1,5 @@
 require 'fileutils'
+require 'open-uri'
 
 class HomeController < ApplicationController  
   before_filter :authenticate_user!, :except => [:index]
@@ -15,22 +16,30 @@ class HomeController < ApplicationController
     @song = Song.find(params[:sid])
     
     #>0 means user has purchased song
-    if Purchase.where(:song_id => @song.id, :user_id => current_user.id).size > 0 
-      @renamed_file_url = Rails.root.to_s + '/temp/' + @song.band.name + ' - ' + @song.name + '.mp3'
-      @real_file_url = Rails.root.to_s + '/music' + @song.mp3.url.sub(/\?.*.$/i, '')
-
-      if File.exist?(@renamed_file_url) and File.file?(@renamed_file_url)
-        redirect_to '/?fileexists'
-      else
-        FileUtils.cp(@real_file_url, @renamed_file_url) #move file to temporary location
-        redirect_to '/?filenoexist'
+#    if Purchase.where(:song_id => @song.id, :user_id => current_user.id).size > 0 
+#      @renamed_file_url = Rails.root.to_s + '/temp/' + @song.band.name + ' - ' + @song.name + '.mp3'
+#      @real_file_url = Rails.root.to_s + '/music' + @song.mp3.url.sub(/\?.*.$/i, '')
+#
+#      if File.exist?(@renamed_file_url) and File.file?(@renamed_file_url)
+#        redirect_to '/?fileexists'
+#      else
+#        FileUtils.cp(@real_file_url, @renamed_file_url) #move file to temporary location
+#        redirect_to '/?filenoexist'
+#      end
+    FileUtils.touch Rails.root.to_s + "/somefilename.doc"
+    
+    File.open(Rails.root.to_s + "somefilename.doc", "wb") do |saved_file|
+        open("http://dl.dropbox.com/u/24593987/Example-OnlineConsentForm.doc", 'rb') do |read_file|
+          saved_file.write(read_file.read)
+        end
+        
+        send_file saved_file
       end
-
-      send_file @renamed_file_url, :x_sendfile => true, :type => 'audio/mp3'
-    else
-      redirect_to root_path, notice: "You have not purchased this song and so you cant download it." +
-        " If you would like to purchase the song please go on the home page and purchase it."
-    end
+      
+#    else
+#      redirect_to root_path, notice: "You have not purchased this song and so you cant download it." +
+#        " If you would like to purchase the song please go on the home page and purchase it."
+#    end
   end
   
   def search

@@ -1,4 +1,4 @@
-class SongsController < ApplicationController
+  class SongsController < ApplicationController
 
   before_filter :authenticate_user!
 

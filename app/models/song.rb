@@ -1,10 +1,17 @@
+
+
 class Song < ActiveRecord::Base
   validates_uniqueness_of :name
   validates_presence_of :name, :cost, :band_id, :user_id
   
-  has_attached_file :mp3, #we cant store the files in the public url!
-                    :url => "/music/:attachment/:id_partition/:style/:filename",
-                    :path => ":rails_root/music/:attachment/:id_partition/:style/:filename"
+  has_attached_file :mp3, 
+#                    :url => "/music/:attachment/:id_partition/:style/:filename",
+#                    :path => ":rails_root/music/:attachment/:id_partition/:style/:filename"
+                    :storage => :dropbox,
+                    :dropbox_credentials => "#{Rails.root}/config/dropbox.yml",
+                    :dropbox_options => { :path => proc { "#{mp3.original_filename}"}}
+                    
+#                    :path => "/:attachment/:attachment/:id/:style/:filename"
   
   belongs_to :band
   belongs_to :album

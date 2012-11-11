@@ -1,0 +1,11 @@
+## YAML Template.
+---
+development:
+  dropbox_key: me1w8rm5njlq7ws
+  dropbox_secret: m25ylbkknttkmhn 
+test:
+  dropbox_key: me1w8rm5njlq7ws
+  dropbox_secret: m25ylbkknttkmhn
+production:
+  dropbox_key: me1w8rm5njlq7ws
+  dropbox_secret: m25ylbkknttkmhn
