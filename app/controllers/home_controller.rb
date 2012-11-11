@@ -27,15 +27,17 @@ class HomeController < ApplicationController
 #        redirect_to '/?filenoexist'
 #      end
 
-    puts Rails.root.to_s
-    puts Rails.root.to_s
-    puts Rails.root.to_s + '/temp'
-    puts Rails.root.to_s + '/temp'
-    puts Rails.root.to_s + '/temp'
+    @songuri =   Rails.root.to_s + '/temp' + @song.band.name + '-' + @song.name + '.mp3'
     
-    FileUtils.touch Rails.root.to_s + "/somefilename.doc"
+    puts @songuri
+    puts @songuri
+    puts @songuri
+    puts @songuri
+    puts @songuri
+
+    FileUtils.touch @songuri
     
-    File.open(Rails.root.to_s + "somefilename.doc", "wb") do |saved_file|
+    File.open(@songuri, "wb") do |saved_file|
         open("http://dl.dropbox.com/u/24593987/Example-OnlineConsentForm.doc", 'rb') do |read_file|
           saved_file.write(read_file.read)
         end
