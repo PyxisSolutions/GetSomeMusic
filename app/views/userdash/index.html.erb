@@ -11,6 +11,7 @@
       <td>£ <%= number_with_precision((p.value.to_f / 100), :precision => 2) %></td>
       <td><%= p.created_at.strftime("%d %b %Y") %></td>
       <td><%= link_to 'Download', home_download_path(:sid => @song.id) %></td>
+      <td><% if @song.mp3.url.nil? %><%= @song.mp3. %><% end %></td>
     </tr>
     <% end %>
   <% end %>
