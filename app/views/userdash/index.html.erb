@@ -9,7 +9,7 @@
       <% @song = Song.find(p.song_id) %>
       <td><%= @song.band.name %></td>
       <td><%= @song.name %></td>
-      <td>£ <%= number_with_precision((p.value.to_d / 100), :precision => 2) %></td>
+      <td>£ <%= number_with_precision((p.value.to_f / 100), :precision => 2) %></td>
       <td><%= p.created_at.strftime("%d %b %Y") %></td>
       <td><%= link_to 'Download', home_download_path(:sid => @song.id) %></td>
       <%#= link_to 'Del', [current_user, p], :method => :delete  %> 

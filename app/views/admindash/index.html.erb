@@ -17,7 +17,7 @@
             <span style="margin-left: 10px" class="label label-success">Artist</span>
           <% end %>
         <% else %>
-          <%= number_with_precision((@totalspent.to_d / 100), :precision => 2) %> 
+          <%= number_with_precision((@totalspent.to_f / 100), :precision => 2) %> 
           (<%= Purchase.where(:user_id => user.id).size %>)
           <% if user.admin? %>
             <span class="label label-warning">Admin</span>
@@ -42,12 +42,12 @@
 </div>
 <table style="width:100%" class="table table-striped">
   <tr class="info"><td>Band Name</td><td>Songs sold</td><td>Earned Us</td></tr>
-  <% if !Band.first.nil? %>
+  <% if !Band.first.nil? and !Purchase.first.nil? %>
     <% Band.find(:all, :order => ":earned_company desc", :limit => 5).each do |band| %>
       <tr>
         <td><%= band.name %></td>
         <td><%= band.songs_sold %></td>
-        <td>£<%= number_with_precision((band.earned_company.to_d / 100), :precision => 2) %></td>
+        <td>£<%= number_with_precision((band.earned_company.to_f / 100), :precision => 2) %></td>
       </tr>
     <% end %>
   <% end %>
