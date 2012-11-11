@@ -16,39 +16,21 @@ class HomeController < ApplicationController
     @song = Song.find(params[:sid])
     
     #>0 means user has purchased song
-#    if Purchase.where(:song_id => @song.id, :user_id => current_user.id).size > 0 
-#      @renamed_file_url = Rails.root.to_s + '/temp/' + @song.band.name + ' - ' + @song.name + '.mp3'
-#      @real_file_url = Rails.root.to_s + '/music' + @song.mp3.url.sub(/\?.*.$/i, '')
-#
-#      if File.exist?(@renamed_file_url) and File.file?(@renamed_file_url)
-#        redirect_to '/?fileexists'
-#      else
-#        FileUtils.cp(@real_file_url, @renamed_file_url) #move file to temporary location
-#        redirect_to '/?filenoexist'
-#      end
-
-    @songuri =   Rails.root.to_s + '/temp/' + @song.band.name + '-' + @song.name + '.mp3'
-    
-    puts @songuri
-    puts @songuri
-    puts @songuri
-    puts @songuri
-    puts @songuri
-
-    FileUtils.touch @songuri
-    
-    File.open(@songuri, "wb") do |saved_file|
+    if Purchase.where(:song_id => @song.id, :user_id => current_user.id).size > 0 
+      @songuri =   Rails.root.to_s + '/temp/' + @song.band.name + '-' + @song.name + '.mp3'
+      
+      FileUtils.touch @songuri
+      File.open(@songuri, "wb") do |saved_file|
         open("http://dl.dropbox.com/u/24593987/" + @song.mp3_file_name, 'rb') do |read_file|
           saved_file.write(read_file.read)
         end
-        
-        send_file saved_file
+        send_file saved_file  #you want to get to here!
       end
       
-#    else
-#      redirect_to root_path, notice: "You have not purchased this song and so you cant download it." +
-#        " If you would like to purchase the song please go on the home page and purchase it."
-#    end
+    else
+      redirect_to root_path, notice: "You have not purchased this song and so you cant download it." +
+        " If you would like to purchase the song please go on the home page and purchase it."
+    end
   end
   
   def search
