@@ -10,7 +10,7 @@
   Downloaded <%= Purchase.where(:song_id => @song.id).count %> times<br/>
   Size: <%= (@song.mp3_file_size / 1048576) %> Mb<br/>
   Released <%= time_ago_in_words(@song.created_at) %> ago<br/>
-  Price: £<%= number_with_precision((@song.cost.to_d / 100), :precision => 2) %>
+  Price: £<%= number_with_precision((@song.cost.to_f / 100), :precision => 2) %>
 </p>
 <br/>
 
