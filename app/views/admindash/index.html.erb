@@ -11,11 +11,6 @@
       <td>£ 
         <% if @totalspent < 1 %>
           0
-          <% if user.admin? %>
-            <span style="margin-left: 10px" class="label label-warning">Admin</span>
-          <% elsif user.role == 'music'%>
-            <span style="margin-left: 10px" class="label label-success">Artist</span>
-          <% end %>
         <% else %>
           <%= number_with_precision((@totalspent.to_f / 100), :precision => 2) %> 
           (<%= Purchase.where(:user_id => user.id).size %>)
@@ -24,7 +19,15 @@
           <% end %>
         <% end %>
       </td>
-      <td></td>
+      <td>
+        <% if user.admin? %>
+          <span style="margin-left: 10px" class="label label-error">Admin</span>
+        <% elsif user.role == 'music'%>
+          <span style="margin-left: 10px" class="label label-warning">Artist</span>
+        <% else %>
+          <span style="margin-left: 10px" class="label label-success">User</span>
+        <% end %>
+      </td>
     </tr>
   <% end %>
 </table>
