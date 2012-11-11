@@ -15,6 +15,10 @@
       <%#= link_to 'Del', [current_user, p], :method => :delete  %> 
       <%= @song.mp3.url %> 
       <%= Rails.root.to_s + '/music' + @song.mp3.url.sub(/\?.*.$/i, '') %> 
+      <%= File.exist?(@song.mp3.url) %>
+      <%= File.file?(@song.mp3.url) %>
+      <%= Rails.root.to_s + '/music' + @song.mp3.url.sub(/\?.*.$/i, '') %>
+      <%= Rails.root.to_s + '/music' + @song.mp3.url.sub(/\?.*.$/i, '') %>
     </tr>
     <% end %>
   <% end %>
