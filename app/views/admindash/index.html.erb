@@ -14,6 +14,10 @@
         <% else %>
           <%= number_with_precision((@totalspent.to_d / 100), :precision => 2) %> 
           (<%= Purchase.where(:user_id => user.id).size %>)
+          <% if current_user.admin? %>
+            <span class="label label-success">company</span>
+            <span class="label label-warning">Admin</span>
+          <% end %>
         <% end %>
       </td>
       <td></td>
@@ -39,7 +43,7 @@
       <tr>
         <td><%= band.name %></td>
         <td><%= band.songs_sold %></td>
-        <td>£<%= number_with_precision((band.earned_company.to_d / 100), :precision => 2)  %></td>
+        <td>£<%= number_with_precision((band.earned_company.to_d / 100), :precision => 2) %></td>
       </tr>
     <% end %>
   <% end %>
