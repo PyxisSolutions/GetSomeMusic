@@ -18,6 +18,7 @@
       <%= File.file?( Rails.root.to_s + '/music' + @song.mp3.url) %><br/>
       <%= File.exist?(Rails.root.to_s + '/music' + @song.mp3.url.sub(/\?.*.$/i, '')) %><br/>
       <%= File.exist?(Rails.root.to_s + '/music' + @song.mp3.url.sub(/\?.*.$/i, '')) %><br/>
+      <%= File.exist?('/music/songs/mp3s/000/000/002/original/Shaddowz.mp3') %><br/>
     </tr>
     <% end %>
   <% end %>
