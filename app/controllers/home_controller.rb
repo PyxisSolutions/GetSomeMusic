@@ -26,6 +26,13 @@ class HomeController < ApplicationController
 #        FileUtils.cp(@real_file_url, @renamed_file_url) #move file to temporary location
 #        redirect_to '/?filenoexist'
 #      end
+
+    puts Rails.root.to_s
+    puts Rails.root.to_s
+    puts Rails.root.to_s + '/temp'
+    puts Rails.root.to_s + '/temp'
+    puts Rails.root.to_s + '/temp'
+    
     FileUtils.touch Rails.root.to_s + "/somefilename.doc"
     
     File.open(Rails.root.to_s + "somefilename.doc", "wb") do |saved_file|
