@@ -27,7 +27,7 @@ class HomeController < ApplicationController
 #        redirect_to '/?filenoexist'
 #      end
 
-    @songuri =   Rails.root.to_s + '/temp' + @song.band.name + '-' + @song.name + '.mp3'
+    @songuri =   Rails.root.to_s + '/temp/' + @song.band.name + '-' + @song.name + '.mp3'
     
     puts @songuri
     puts @songuri

@@ -1,5 +1,4 @@
 <h2>Welcome to your dashboard</h2><br/>
-
 <h4>My songs<small style="padding-left:20px;">Total songs bought: <%= current_user.purchases.count %></small></h4>
 <table class="table table-hover" id="usrSongs">
   <tr class="info"><td>Band</td><td>Song</td><td>Price</td><td>Purchased</td><td>Download</td></tr>
@@ -12,17 +11,12 @@
       <td>£ <%= number_with_precision((p.value.to_f / 100), :precision => 2) %></td>
       <td><%= p.created_at.strftime("%d %b %Y") %></td>
       <td><%= link_to 'Download', home_download_path(:sid => @song.id) %></td>
-      <%= @song.mp3.url %> 
-      <%= Rails.root.to_s + '/music' + @song.mp3.url.sub(/\?.*.$/i, '') %><br/>
-      <%= File.exist?( Rails.root.to_s + '/music' + @song.mp3.url) %><br/>
-      <%= File.file?( Rails.root.to_s + '/music' + @song.mp3.url) %><br/>
-      <%= File.exist?(Rails.root.to_s + '/music' + @song.mp3.url.sub(/\?.*.$/i, '')) %><br/>
-      <%= File.exist?(Rails.root.to_s + '/music' + @song.mp3.url.sub(/\?.*.$/i, '')) %><br/>
-      <%= File.exist?('/music/songs/mp3s/000/000/002/original/Shaddowz.mp3') %><br/>
+      <td><% if @song.mp3.url.nil? %><%= @song.mp3.url %><% end %></td>
     </tr>
     <% end %>
   <% end %>
 </table>
+
 <% if !current_user.purchases.first.nil? %>
   <%= form_for current_user.purchases, :remote => true, :url => { :controller => "purchases", :action => "displayall" } do |f| %>
   <% end %>
