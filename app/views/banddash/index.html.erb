@@ -1,5 +1,4 @@
 <h2>Your Band's dashboard</h2>
-<h1><% if !current_user.band.nil? %><%= current_user.band.subscription.created_at %><%end%></h1>
 <div>
   <% if current_user.band.nil? %>
     <% @band = Band.new %>

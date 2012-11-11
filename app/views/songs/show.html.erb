@@ -10,11 +10,11 @@
   Downloaded <%= Purchase.where(:song_id => @song.id).count %> times<br/>
   Size: <%= (@song.mp3_file_size / 1048576) %> Mb<br/>
   Released <%= time_ago_in_words(@song.created_at) %> ago<br/>
-  Price: £<%= number_with_precision((@song.cost.to_d / 100), :precision => 2) %>
+  Price: £<%#= number_with_precision((@song.cost.to_d / 100), :precision => 2) %>
 </p>
 <br/>
 
-<% if Purchase.where(:song_id => @song.id, :user_id => current_user.id)  %>
+<% if Purchase.where(:song_id => @song.id, :user_id => current_user.id).count > 0  %>
   <%= link_to 'Download', home_download_path(:sid => @song.id), :class => "btn btn-info", :style => 'margin-top:-10px;' %>
   <%= link_to 'Back Home', root_path, :style => 'margin-left:20px;font-size:20px' %>
 <% else %>
