@@ -34,11 +34,13 @@
 </div>
 <table style="width:100%" class="table table-striped">
   <tr class="info"><td>Band Name</td><td>Songs sold</td><td>Earned Us</td></tr>
-  <% Band.find(:all, :order => ":earned_company desc", :limit => 5).each do |band| %>
-    <tr>
-      <td><%= band.name %></td>
-      <td><%= band.songs_sold %></td>
-      <td>£<%= number_with_precision((band.earned_company.to_d / 100), :precision => 2)  %></td>
-    </tr>
+  <% if !Band.first.nil? %>
+    <% Band.find(:all, :order => ":earned_company desc", :limit => 5).each do |band| %>
+      <tr>
+        <td><%= band.name %></td>
+        <td><%= band.songs_sold %></td>
+        <td>£<%= number_with_precision((band.earned_company.to_d / 100), :precision => 2)  %></td>
+      </tr>
+    <% end %>
   <% end %>
 </table>
