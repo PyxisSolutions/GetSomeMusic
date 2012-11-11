@@ -38,9 +38,9 @@ class TransactionsController < ApplicationController
         :amount_1 => @value,
         :item_name_1 => @item_name,
         :upload => "1",
-        :return => "https://localhost:3000/credits/update?tid=" + @transaction.id.to_s,
+        :return => "https://getsomemusic.herokuapp.com/credits/update?tid=" + @transaction.id.to_s,
         :invoice => @transaction.id.to_s,
-        :notify_url => "https://localhost:3000/transactions/" + @transaction.id.to_s + '/'
+        :notify_url => "https://getsomemusic.herokuapp.com/transactions/" + @transaction.id.to_s + '/'
       }
 
       redirect_to "https://www.sandbox.paypal.com/cgi-bin/websrc?" + values.map { |param,value| "#{param}=#{value}" }.join("&")
@@ -63,7 +63,13 @@ class TransactionsController < ApplicationController
 #    end
 
     @user.band.subscription.save and @transaction.save
+    puts '\n\n\n\n\n\n'
+    puts '\n\n\n\n\n\n'
+    puts '\n\n\n\n\n\n'
     puts 'tid: ' +@transaction.id.to_s + ' uid:' + @user.id.to_s + ' isdone?:' + params[:payment_status].to_s + ' ____' + (params[:payment_status] == 'Complete').to_s
+    puts '\n\n\n\n\n\n'
+    puts '\n\n\n\n\n\n'
+    puts '\n\n\n\n\n\n'
     send_data 'asdfa'
   end
 end
