@@ -12,14 +12,14 @@
         <% if @totalspent < 1 %>
           0
           <% if user.admin? %>
-            <span class="label label-success">company</span>
             <span class="label label-warning">Admin</span>
+          <% elsif user.role == 'music'%>
+            <span class="label label-success">Artist</span>
           <% end %>
         <% else %>
           <%= number_with_precision((@totalspent.to_d / 100), :precision => 2) %> 
           (<%= Purchase.where(:user_id => user.id).size %>)
           <% if user.admin? %>
-            <span class="label label-success">company</span>
             <span class="label label-warning">Admin</span>
           <% end %>
         <% end %>
