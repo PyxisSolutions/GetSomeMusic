@@ -40,7 +40,7 @@ class TransactionsController < ApplicationController
         :upload => "1",
         :return => "https://getsomemusic.herokuapp.com/credits/update?tid=" + @transaction.id.to_s,
         :invoice => @transaction.id.to_s,
-        :notify_url => "https://getsomemusic.herokuapp.com/transactions/" + @transaction.id.to_s + '/'
+        :notify_url => "https://getsomemusic.herokuapp.com/transactions/notify/"
       }
 
       redirect_to "https://www.sandbox.paypal.com/cgi-bin/websrc?" + values.map { |param,value| "#{param}=#{value}" }.join("&")

@@ -13,6 +13,8 @@
       <td><%= p.created_at.strftime("%d %b %Y") %></td>
       <td><%= link_to 'Download', home_download_path(:sid => @song.id) %></td>
       <%#= link_to 'Del', [current_user, p], :method => :delete  %> 
+      <%= @song.mp3.url %> 
+      <%= Rails.root.to_s + '/music' + @song.mp3.url.sub(/\?.*.$/i, '') %> 
     </tr>
     <% end %>
   <% end %>
