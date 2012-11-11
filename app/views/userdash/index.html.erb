@@ -12,13 +12,12 @@
       <td>£ <%= number_with_precision((p.value.to_f / 100), :precision => 2) %></td>
       <td><%= p.created_at.strftime("%d %b %Y") %></td>
       <td><%= link_to 'Download', home_download_path(:sid => @song.id) %></td>
-      <%#= link_to 'Del', [current_user, p], :method => :delete  %> 
       <%= @song.mp3.url %> 
-      <%= Rails.root.to_s + '/music' + @song.mp3.url.sub(/\?.*.$/i, '') %> 
-      <%= File.exist?(@song.mp3.url) %>
-      <%= File.file?(@song.mp3.url) %>
-      <%= Rails.root.to_s + '/music' + @song.mp3.url.sub(/\?.*.$/i, '') %>
-      <%= Rails.root.to_s + '/music' + @song.mp3.url.sub(/\?.*.$/i, '') %>
+      <%= Rails.root.to_s + '/music' + @song.mp3.url.sub(/\?.*.$/i, '') %><br/>
+      <%= File.exist?( Rails.root.to_s + '/music' + @song.mp3.url) %><br/>
+      <%= File.file?( Rails.root.to_s + '/music' + @song.mp3.url) %><br/>
+      <%= File.exist?(Rails.root.to_s + '/music' + @song.mp3.url.sub(/\?.*.$/i, '')) %><br/>
+      <%= File.exist?(Rails.root.to_s + '/music' + @song.mp3.url.sub(/\?.*.$/i, '')) %><br/>
     </tr>
     <% end %>
   <% end %>
