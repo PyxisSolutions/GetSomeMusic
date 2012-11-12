@@ -85,7 +85,7 @@
             <div id="collapseTwo" class="accordion-body collapse">
               <div class="accordion-inner">
                 <% if !Song.first.nil? %>
-                  <% Song.find(:ll, :order => "id desc", :limit => 10).reverse.each do |track| %>
+                  <% Song.find(:all, :order => "id desc", :limit => 10).reverse.each do |track| %>
                   <a href="/songs/<%= track.id %>"><%= track.name %></a>
                   <% end %>
                 <% end %>
