@@ -58,12 +58,20 @@
           <div class="accordion-group">
             <div class="accordion-heading">
               <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
-                Collapsible Group Item #1
+                <% if user_signed_in? %>
+                  <strong>Signed in </strong>(<%= current_user.email %>)
+                <% else %>
+                  <strong>Not Signed in</strong>
+                <% end %>
               </a>
             </div>
             <div id="collapseOne" class="accordion-body collapse in">
               <div class="accordion-inner">
-                Anim pariatur cliche...
+                <% if user_signed_in? %>
+                <p>Welcome!<br/></p>  
+                <% else %>
+                <p>To purchase credits and get songs please <%= link_to 'Sign in', new_user_session_path %></p>
+                <% end %>
               </div>
             </div>
           </div>
@@ -71,12 +79,16 @@
           <div class="accordion-group">
             <div class="accordion-heading">
               <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
-                Collapsible Group Item #2
+                GetSomeMusic Latest 10 tracks 
               </a>
             </div>
             <div id="collapseTwo" class="accordion-body collapse">
               <div class="accordion-inner">
-                Anim pariatur cliche...
+                <% if !Song.first.nil? %>
+                  <% Song.find(:ll, :order => "id desc", :limit => 10).reverse.each do |track| %>
+                  <a href="/songs/<%= track.id %>"><%= track.name %></a>
+                  <% end %>
+                <% end %>
               </div>
             </div>
           </div>
@@ -84,18 +96,21 @@
           <div class="accordion-group">
             <div class="accordion-heading">
               <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseThree">
-                My Credits
+                My Account
               </a>
             </div>
             <div id="collapseThree" class="accordion-body collapse">
               <div class="accordion-inner">
                 <% if user_signed_in? %>
-                I have <%= current_user.credit.count %> credits<br/>
-                
+                  <% if current_user.credit.count < 500 %>
+                    I have <span class="label label-important"><%= current_user.credit.count %></span> credits<br/>
+                  <% else %>
+                    I have <span class="label label-success"><%= current_user.credit.count %></span> credits<br/>
+                  <% end %>
                 <small>To buy more go to our <a href="/">home page</a> and click
                   'Purchase Music Credits' near the bottom of the page</small>
                 <% else %>
-                Log-in to be able to purchase credits and songs!
+                Log-in to view your account details.  
                 <% end %>
               </div>
             </div>
