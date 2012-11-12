@@ -87,7 +87,8 @@
                 <% if !Song.first.nil? %>
                   <% @count = 1 %>
                   <% Song.find(:all, :order => "id desc", :limit => 10).reverse.each do |track| %>
-                  <a href="/songs/<%= track.id %>"><%= @count %><%= track.name %></a><% count += 1 %>
+                  <a href="/songs/<%= track.id %>"><%= @count %><%= track.name %></a>
+                  <% @count += 1 %>
                   <% end %>
                 <% end %>
               </div>
