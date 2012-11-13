@@ -49,7 +49,7 @@ class TransactionsController < ApplicationController
   end
 
   def notify
-    @transaction = Transaction.find(params[:invoice].to_i)
+    @transaction = Transaction.find(params[:invoice])
     @transaction.paypal_transaction_id = params[:tnx_id]
     @user = User.find(@transaction.user_id)
     
@@ -79,7 +79,7 @@ class TransactionsController < ApplicationController
     
     @transaction.save and @credit.save
   rescue
-    puts '\n\n\n\nsomething went terribly wrong at transaction ' + @transaction.id 
-    + ' Please check the state of the transaction and contact the effected user: UID' + @user.id
+    puts '\n\n\n\nsomething went terribly wrong at transaction ' + @transaction.id.to_s
+       + ' Please check the state of the transaction and contact the effected user: UID' + @user.id.to_s
   end
 end
