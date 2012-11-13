@@ -34,6 +34,14 @@
       </div>
     </div><br/><br/><br/><br/><br/>
     
+    <div>
+      <ul class="nav nav-tabs">
+        <li class="active" style="margin-left: 26%"><a href="#">Home</a></li>
+        <li><a href="#">Dashboard</a></li>
+        <li><a href="#">Sign out</a></li>
+      </ul>
+    </div>
+    
     <div class="row" id="warnings">
       <div class="span3"></div>
       <div class="span5">
@@ -48,7 +56,6 @@
         <% end %>
       </div> 
       <div class="span3"></div>
-    </div>
     </div>
     
     <div class="row" >
@@ -87,7 +94,7 @@
                 <% if !Song.first.nil? %>
                   <% @count = 1 %>
                   <% Song.find(:all, :order => "id desc", :limit => 10).reverse.each do |track| %>
-                  <strong><%= @count %></strong> <a href="/songs/<%= track.id %>"><%= track.name %></a>
+                  <strong><%= @count %></strong> <a href="/songs/<%= track.id %>"><%= track.name %></a><br/>
                   <% @count += 1 %>
                   <% end %>
                 <% end %>
