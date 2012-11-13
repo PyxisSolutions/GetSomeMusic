@@ -10,10 +10,8 @@ class PurchasesController < ApplicationController
         
         @band = Band.find(@song.band_id)
         @band.earned += @song.cost
-        #@band.earned_company += (@song.cost / 10)
         @band.songs_sold += 1
-        
-        @purchase.company_profit = 0
+    
         @purchase.band_profit = @song.cost
         
         current_user.credit.count -= @song.cost #charge user for purchasing song

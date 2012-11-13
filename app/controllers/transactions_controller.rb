@@ -73,7 +73,20 @@ class TransactionsController < ApplicationController
         @user.band.subscription.total_purchased += 1
         @user.band.subscription.last_purchase = Date.today
         @user.band.subscription.expires = Date.today.to_time.advance(:months => 3).to_date   
-        @user.band.earned_company += @transaction.credits_value
+        puts 'BAND CREDIT AS IS: ' + @user.band.earned_company.to_s
+        puts 'BAND CREDIT AS IS: ' + @user.band.earned_company.to_s
+        puts 'BAND CREDIT AS IS: ' + @user.band.earned_company.to_s
+        
+        if !@user.band.earned_company.nil? 
+          @user.band.earned_company += @transaction.credits_value
+        else
+          @user.band.earned_company = @transaction.credits_value
+        end
+        puts 'AFTER CREDIT AS IS: ' + @user.band.earned_company.to_s
+        puts 'AFTER CREDIT AS IS: ' + @user.band.earned_company.to_s
+        puts 'AFTER CREDIT AS IS: ' + @user.band.earned_company.to_s
+
+        
         @transaction.successful = true
         
         puts 'IN THE SUB SECTION!!!'
