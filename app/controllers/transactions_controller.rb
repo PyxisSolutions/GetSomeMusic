@@ -54,7 +54,7 @@ class TransactionsController < ApplicationController
     @user = User.find(@transaction.user_id)
     
     
-    if !params[:payment_status].nil? and (params[:payment_status] == "Completed" or params[:payment_status] == "completed")
+    if !@transaction.successful and !params[:payment_status].nil? and (params[:payment_status] == "Completed" or params[:payment_status] == "completed")
               puts 'IN THE sucess section'
               puts 'IN THE sucess section'
               puts 'IN THE sucess section'
