@@ -7,18 +7,7 @@
     <tr>
       <td><%= user.id %></td>
       <td><%= user.email %></td>
-      <% @totalspent = 0 %><% Purchase.where(:user_id => user.id).each do |p|%><% @totalspent += p.company_profit %><% end %>
-      <td>£ 
-        <% if @totalspent < 1 %>
-          0
-        <% else %>
-          <%= number_with_precision((@totalspent.to_f / 100), :precision => 2) %> 
-          (<%= Purchase.where(:user_id => user.id).size %>)
-          <% if user.admin? %>
-            <span class="label label-warning">Admin</span>
-          <% end %>
-        <% end %>
-      </td>
+      <td>£ <%= number_with_precision((user.total_credits_purchased.to_f / 100), :precision => 2) %> (<%= Purchase.where(:user_id => user.id).size %>)</td>
       <td>
         <% if user.admin? %>
           <span style="margin-left: 10px" class="label label-important">Admin</span>
@@ -50,7 +39,7 @@
       <tr>
         <td><%= band.name %></td>
         <td><%= band.songs_sold %></td>
-        <td>£<%= number_with_precision((band.earned_company.to_f / 100), :precision => 2) %></td>
+        <td>£<%= number_with_precision((band.user.total_credits_purchased.to_f / 100), :precision => 2) %></td>
       </tr>
     <% end %>
   <% end %>
