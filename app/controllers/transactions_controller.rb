@@ -12,20 +12,19 @@ class TransactionsController < ApplicationController
     @transaction.user_id = current_user.id
     @transaction.ip_during_purchase = request.remote_ip
     @transaction.purchase_date = Time.now
-    @transaction.successful = false #default
-    @transaction.transaction_type = 'credit'
+    @transaction.successful = false #will be set to true on paypal callback if payment is successful
     
-    
+    #band subscription
     if !params[:transaction][:sub].nil? and params[:transaction][:sub] == 'q4DaFUbr'
-      puts 'YAEH BEBI'
       @transaction.credits_value = 3000
       @transaction.transaction_type = 'subscription'
       @value = 30
-      @item_name = "3 month GetSomeMusic subscription."
+      @item_name = "3 Month GetSomeMusic band subscription."
       current_user.band.subscription.last_purchase = Date.today
-      #3 month subscription
+    #user buying credits
     else
       @value = params[:transaction][:credit]
+      @transaction.transaction_type = 'credit'
       @transaction.credits_value = (params[:transaction][:credit].to_i * 100)
     end
     
@@ -42,7 +41,6 @@ class TransactionsController < ApplicationController
         :invoice => @transaction.id.to_s,
         :notify_url => "https://getsomemusic.herokuapp.com/transactions/notify/"
       }
-
       redirect_to "https://www.sandbox.paypal.com/cgi-bin/websrc?" + values.map { |param,value| "#{param}=#{value}" }.join("&")
     end
     
@@ -55,21 +53,33 @@ class TransactionsController < ApplicationController
     @transaction.paypal_transaction_id = params[:tnx_id]
     @user = User.find(@transaction.user_id)
     
-#    if !params[:payment_status].nil? and (params[:payment_status] == "Complete" or params[:payment_status] == "complete")
-#      @transaction.successful = true;
-#      @user.band.subscription.total_purchased += 1
-#      @user.band.subscription.last_purchase = Date.today
-#      @user.band.subscription.expires = Date.today.to_time.advance(:months => 3).to_date 
-#    end
+    if !params[:payment_status].nil? and (params[:payment_status] == "Complete" or params[:payment_status] == "complete")
+      if @transaction.transaction_type == 'credit'
+        #increment the user's credits
+        @transaction.successful = true;
+        @user.credit.count += @transaction.credits_value;
+      else
+        #give 3 month subscription to the band
+        @user.band.subscription.total_purchased += 1
+        @user.band.subscription.last_purchase = Date.today
+        @user.band.subscription.expires = Date.today.to_time.advance(:months => 3).to_date        
+        @transaction.successful = true;
+      end
+    end
 
     @user.band.subscription.save and @transaction.save
     puts '\n\n\n\n\n\n'
     puts '\n\n\n\n\n\n'
     puts '\n\n\n\n\n\n'
     puts 'tid: ' +@transaction.id.to_s + ' uid:' + @user.id.to_s + ' isdone?:' + params[:payment_status].to_s + ' ____' + (params[:payment_status] == 'Complete').to_s
-    puts '\n\n\n\n\n\n'
+    puts '\n\n\n\n\n\nIS TRANS NIL? ' + @transaction.nil?
     puts '\n\n\n\n\n\n'
     puts '\n\n\n\n\n\n'
     send_data 'asdfa'
+    
+    @transaction.save and @credit.save
+  rescue
+    puts '\n\n\n\nsomething went terribly wrong at transaction ' + @transaction.id 
+    + ' Please check the state of the transaction and contact the effected user: UID' + @user.id
   end
 end

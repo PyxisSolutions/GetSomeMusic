@@ -16,7 +16,7 @@
     <% Song.all.reverse.each do |track| %>
     <tr>
       <td><%= track.band.name %></td>
-      <td><%= track.name %></td>
+      <td><%= track.name %><%= track.band.has_subscription(track.band) %></td>
       <td><%= number_with_precision(track.cost.to_f / 100, :precision => 2) %></td>
       <% if user_signed_in? %>
         <td><a href="/songs/<%= track.id %>"><%= image_tag '/assets/eye.png', :size => "35x30", :id => "show" %></a></td>

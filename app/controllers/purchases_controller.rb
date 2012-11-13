@@ -8,20 +8,17 @@ class PurchasesController < ApplicationController
         @song = Song.find(params[:purchase][:song_id])
         @purchase = current_user.purchases.build( :song_id => params[:purchase][:song_id], :value => @song.cost)
         
-        @company = User.where(:admin => true).first #there should be only 1 admin
         @band = Band.find(@song.band_id)
-        @band.earned += ((@song.cost / 10) * 9)
-        @band.earned_company += (@song.cost / 10)
+        @band.earned += @song.cost
+        #@band.earned_company += (@song.cost / 10)
         @band.songs_sold += 1
-        @band.user.credit.count += ((@song.cost / 10) * 9) #give band their share
-        @company.credit.count += (@song.cost / 10) #give company 10%
         
-        @purchase.company_profit = (@song.cost / 10)
-        @purchase.band_profit = ((@song.cost / 10) * 9)
+        @purchase.company_profit = 0
+        @purchase.band_profit = @song.cost
         
         current_user.credit.count -= @song.cost #charge user for purchasing song
         
-        if @purchase.save and current_user.credit.save and @band.user.credit.save and @company.credit.save and @band.save
+        if @purchase.save and current_user.credit.save and @band.user.credit.save and @band.save
           redirect_to userdash_index_path, notice: 'Sucessfully purchased song'
         else
           redirect_to userdash_index_path, notice: 'An error occured during your purchase' + ' You have not been charged.'
