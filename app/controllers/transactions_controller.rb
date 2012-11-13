@@ -54,20 +54,34 @@ class TransactionsController < ApplicationController
     @user = User.find(@transaction.user_id)
     
     if !params[:payment_status].nil? and (params[:payment_status] == "Complete" or params[:payment_status] == "complete")
+              puts 'IN THE sucess section'
+              puts 'IN THE sucess section'
+              puts 'IN THE sucess section'
+
       if @transaction.transaction_type == 'credit'
         #increment the user's credits
         @transaction.successful = true;
         @user.credit.count += @transaction.credits_value;
+        puts 'IN THE CREDITS SECTION!!!'
+        puts 'IN THE CREDITS SECTION!!!'
+        puts 'IN THE CREDITS SECTION!!!'
       else
         #give 3 month subscription to the band
         @user.band.subscription.total_purchased += 1
         @user.band.subscription.last_purchase = Date.today
         @user.band.subscription.expires = Date.today.to_time.advance(:months => 3).to_date        
         @transaction.successful = true;
+        puts 'IN THE SUB SECTION!!!'
+        puts 'IN THE SUB SECTION!!!'
+        puts 'IN THE SUB SECTION!!!'
+        
       end
     end
-
+    puts 'GOT THIS FAR!!!'
+    
     @user.band.subscription.save and @transaction.save
+    
+    puts 'So it should have worked'
     puts '\n\n\n\n\n\n'
     puts '\n\n\n\n\n\n'
     puts '\n\n\n\n\n\n'
@@ -75,7 +89,9 @@ class TransactionsController < ApplicationController
     puts '\n\n\n\n\n\nIS TRANS NIL? ' + @transaction.nil?
     puts '\n\n\n\n\n\n'
     puts '\n\n\n\n\n\n'
-    send_data 'asdfa'
+    
+    #send_data 'asdfa'
+    render :nothing => true
     
     @transaction.save and @credit.save
   rescue
