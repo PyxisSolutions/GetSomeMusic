@@ -6,7 +6,7 @@
   <% User.all.each do |user| %>
     <tr>
       <td><%= user.id %></td>
-      <td><%= user.email %></td>
+      <td><%= user.email %></td>      
       <td>£ <%= number_with_precision((user.total_credits_purchased.to_f / 100), :precision => 2) %> (<%= Purchase.where(:user_id => user.id).size %>)</td>
       <td>
         <% if user.admin? %>

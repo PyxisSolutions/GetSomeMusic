@@ -3,8 +3,9 @@ require 'open-uri'
 
 class HomeController < ApplicationController  
   before_filter :authenticate_user!, :except => [:index]
-
+  
   def index
+    Purchase.all.destroy
     if user_signed_in?
       if  current_user.credit.nil?
         redirect_to :controller => :credits, :action => :create
