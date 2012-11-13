@@ -34,13 +34,6 @@
 </div><br/>
 
 <% if !current_user.band.nil? %>
-  <%= form_for Transaction.new do |f| %>
-    <%= f.hidden_field :sub, :value => 'q4DaFUbr' %>
-    <button type="submit" class="btn btn-success">Subscribe (3 months)</button>
-  <% end %>
-<% end %>
-
-<% if !current_user.band.nil? %>
   <div>
     <h3>Tracks</h3>
     <table class="table table-striped">
@@ -69,21 +62,36 @@
       </tr>
       <% end %>
     </table>
+    <% if current_user.band.has_subscription(current_user.band) %>
     <button id="btnTrack" style="margin-bottom:10px;" class="btn btn-success" onclick="btnTrack();">Create a new track</button>
-    <div id="newTrack" style="display:none;">
-      <% if current_user.band.has_subscription(current_user.band) %>
+      <div id="newTrack" style="display:none;">
         <%= form_for Song.new, :html => { :multipart => true } do |f| %>
           <%= f.text_field :name, :placeholder => "Song name" %><br/>
           <%= f.text_field :cost, :placeholder => "Cost ( £ )" %><br/>
           <%= f.text_field :tag_list, :placeholder => "Tags, separated by commas" %><br/>
           mp3 file: <%= f.file_field :mp3 %><br/>
           <%= f.submit 'Upload new track', :class => "btn btn-success" %>&nbsp;&nbsp;
-          <button type="button" class="btn btn-danger" onclick="newTrack();">Cancel</button>
+          <button type="button" class="btn btn-danger" onclick="newTrack();">Cancel</button>    
         <% end %>
-      <% end %>
-    </div>
+      </div>
+    <% else %>
+      <div class="alert alert-error">
+        <h4>Subscribe to sell!</h4>
+        <h5 style="color:black">In order to upload new songs and have your songs displayed on the purchase list
+          you need to subscribe to GetSomeMusic!</h5>
+        <h5 style="color:black">To purchase a 3 month subscription please click the subscribe button bellow. 
+          <small style="color:black">You will have to pay a one time charge of £30 for a <strong>three month</strong> subscription.</small></h5>
+        
+        <% if !current_user.band.nil? %>
+          <%= form_for Transaction.new do |f| %>
+            <%= f.hidden_field :sub, :value => 'q4DaFUbr' %>
+            <button type="submit" class="btn btn-success">Subscribe (3 months)</button>
+          <% end %>
+        <% end %>
+      </div>
+    <% end %>
   </div>
-<% end %><br/><br/><br/>
+<% end %><br/>
 
 <h3>Albums<small style="margin-left:20px;">click the album titles to show/hide their contents</small></h3>
 <% @temp_song = Song.new %>
