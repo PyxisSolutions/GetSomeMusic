@@ -34,7 +34,7 @@
 </div>
 <table style="width:100%" class="table table-striped">
   <tr class="info"><td>Band Name</td><td>Songs sold</td><td>Earned Us</td></tr>
-  <% if !Band.first.nil? and !Purchase.first.nil? %>
+  <% if !Band.first.nil? %>
     <% Band.find(:all, :order => "earned_company desc", :limit => 5).each do |band| %>
       <tr>
         <td><%= band.name %></td>

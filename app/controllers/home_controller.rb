@@ -5,12 +5,6 @@ class HomeController < ApplicationController
   before_filter :authenticate_user!, :except => [:index]
   
   def index
-    
-    
-    Purchase.all.each do |p|
-      p.destroy
-    end
-    
     if user_signed_in?
       if  current_user.credit.nil?
         redirect_to :controller => :credits, :action => :create
