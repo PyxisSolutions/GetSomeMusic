@@ -53,6 +53,7 @@ class TransactionsController < ApplicationController
     @transaction.paypal_transaction_id = params[:tnx_id]
     @user = User.find(@transaction.user_id)
     
+    
     if !params[:payment_status].nil? and (params[:payment_status] == "Complete" or params[:payment_status] == "complete")
               puts 'IN THE sucess section'
               puts 'IN THE sucess section'
@@ -65,6 +66,8 @@ class TransactionsController < ApplicationController
         puts 'IN THE CREDITS SECTION!!!'
         puts 'IN THE CREDITS SECTION!!!'
         puts 'IN THE CREDITS SECTION!!!'
+        
+        @user.credit and @transaction.save
       else
         #give 3 month subscription to the band
         @user.band.subscription.total_purchased += 1
@@ -75,12 +78,11 @@ class TransactionsController < ApplicationController
         puts 'IN THE SUB SECTION!!!'
         puts 'IN THE SUB SECTION!!!'
         
+        @user.band.subscription.save and @transaction.save
       end
     end
     puts 'GOT THIS FAR!!!'
-    
-    @user.band.subscription.save and @transaction.save
-    
+        
     puts 'So it should have worked'
     puts '\n\n\n\n\n\n'
     puts '\n\n\n\n\n\n'
