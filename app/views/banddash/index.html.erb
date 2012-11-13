@@ -71,13 +71,16 @@
     </table>
     <button id="btnTrack" style="margin-bottom:10px;" class="btn btn-success" onclick="btnTrack();">Create a new track</button>
     <div id="newTrack" style="display:none;">
-      <%= form_for Song.new, :html => { :multipart => true } do |f| %>
-        <%= f.text_field :name, :placeholder => "Song name" %><br/>
-        <%= f.text_field :cost, :placeholder => "Cost ( £ )" %><br/>
-        <%= f.text_field :tag_list, :placeholder => "Tags, separated by commas" %><br/>
-        mp3 file: <%= f.file_field :mp3 %><br/>
-        <%= f.submit 'Upload new track', :class => "btn btn-success" %>&nbsp;&nbsp;
-        <button type="button" class="btn btn-danger" onclick="newTrack();">Cancel</button>
+      <%# if current_user.band.has_subscription(band) %>
+        <%= true == current_user.band.has_subscription(current_user.band)  %>
+        <%= form_for Song.new, :html => { :multipart => true } do |f| %>
+          <%= f.text_field :name, :placeholder => "Song name" %><br/>
+          <%= f.text_field :cost, :placeholder => "Cost ( £ )" %><br/>
+          <%= f.text_field :tag_list, :placeholder => "Tags, separated by commas" %><br/>
+          mp3 file: <%= f.file_field :mp3 %><br/>
+          <%= f.submit 'Upload new track', :class => "btn btn-success" %>&nbsp;&nbsp;
+          <button type="button" class="btn btn-danger" onclick="newTrack();">Cancel</button>
+        <%# end %>
       <% end %>
     </div>
   </div>

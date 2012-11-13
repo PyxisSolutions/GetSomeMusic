@@ -11,10 +11,9 @@ class Band < ActiveRecord::Base
     # to use: <%= track.band.has_subscription %>
     if !band.subscription.nil?
       if band.subscription.expires > Date.today.to_time
-            return true
+        return true
       end
-
-      return false
+        return false
     end
   end
   
