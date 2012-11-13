@@ -67,7 +67,12 @@ class TransactionsController < ApplicationController
         puts 'IN THE CREDITS SECTION!!!'
         puts 'IN THE CREDITS SECTION!!!'
         
-        @user.credit and @transaction.save
+        @user.credit.save and @transaction.save
+        
+        puts 'SAVED THE CREDITS'
+        puts 'SAVED THE CREDITS'
+        puts 'SAVED THE CREDITS'
+        puts 'SAVED THE CREDITS'
       else
         #give 3 month subscription to the band
         @user.band.subscription.total_purchased += 1
@@ -79,18 +84,14 @@ class TransactionsController < ApplicationController
         puts 'IN THE SUB SECTION!!!'
         
         @user.band.subscription.save and @transaction.save
+        puts 'SAVED THE SUB'
+        puts 'SAVED THE SUB'
+        puts 'SAVED THE SUB'
+        puts 'SAVED THE SUB'
+
       end
     end
     puts 'GOT THIS FAR!!!'
-        
-    puts 'So it should have worked'
-    puts '\n\n\n\n\n\n'
-    puts '\n\n\n\n\n\n'
-    puts '\n\n\n\n\n\n'
-    puts 'tid: ' + @transaction.id.to_s + ' uid:' + @user.id.to_s + ' isdone?:' + params[:payment_status].to_s + ' ____' + (params[:payment_status] == 'Complete').to_s
-    puts '\n\n\n\n\n\nIS TRANS NIL? ' + @transaction.nil?
-    puts '\n\n\n\n\n\n'
-    puts '\n\n\n\n\n\n'
     
     #send_data 'asdfa'
     render :nothing => true
