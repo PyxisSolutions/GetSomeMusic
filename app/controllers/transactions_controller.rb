@@ -71,7 +71,7 @@ class TransactionsController < ApplicationController
     puts '\n\n\n\n\n\n'
     puts '\n\n\n\n\n\n'
     puts '\n\n\n\n\n\n'
-    puts 'tid: ' +@transaction.id.to_s + ' uid:' + @user.id.to_s + ' isdone?:' + params[:payment_status].to_s + ' ____' + (params[:payment_status] == 'Complete').to_s
+    puts 'tid: ' + @transaction.id.to_s + ' uid:' + @user.id.to_s + ' isdone?:' + params[:payment_status].to_s + ' ____' + (params[:payment_status] == 'Complete').to_s
     puts '\n\n\n\n\n\nIS TRANS NIL? ' + @transaction.nil?
     puts '\n\n\n\n\n\n'
     puts '\n\n\n\n\n\n'
@@ -79,7 +79,6 @@ class TransactionsController < ApplicationController
     
     @transaction.save and @credit.save
   rescue
-    puts '\n\n\n\nsomething went terribly wrong at transaction ' + @transaction.id.to_s
-       + ' Please check the state of the transaction and contact the effected user: UID' + @user.id.to_s
+    puts '\n\n\n\nsomething went terribly wrong at transaction ' + @transaction.id.to_s + ' Please check the state of the transaction and contact the effected user: UID' + @user.id.to_s
   end
 end
