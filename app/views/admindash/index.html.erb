@@ -44,3 +44,11 @@
     <% end %>
   <% end %>
 </table>
+
+<br/><br/><h3>Other stuff...</h3>
+<% Subscription.all.each do |sub| %>
+  ID: <%= sub.id %>
+  UID: <%= sub.user_id %>
+  Band: <%= sub.band.name %>
+  Total: <%= sub.total_purchased %><br/>
+<% end %>
