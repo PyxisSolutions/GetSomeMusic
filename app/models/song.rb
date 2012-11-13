@@ -6,8 +6,8 @@ class Song < ActiveRecord::Base
   has_attached_file :mp3, 
                     :storage => :dropbox, 
                     :dropbox_credentials => "#{Rails.root}/config/dropbox.yml",
-                    :dropbox_options => { :path => proc { "#{mp3.original_filename}"}}
-                    #:url => "http://dl.dropbox.com/u/24593987/" + "#{mp3.original_filename}"
+                    :dropbox_options => { :path => proc { "#{mp3.original_filename}"}},
+                    :url => "http://dl.dropbox.com/u/24593987/" + "#{mp3.original_filename}"
   
   belongs_to :band
   belongs_to :album

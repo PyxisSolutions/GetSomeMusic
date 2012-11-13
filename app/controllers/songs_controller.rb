@@ -9,11 +9,11 @@
       @song.user_id = current_user.id
       @song.band_id = current_user.band.id
 
-#      if @song.save
+      if @song.save
           redirect_to banddash_index_path, notice: 'Successfully uploaded song.'
-#      else
-#        redirect_to banddash_index_path, notice: 'Error during song creation'
-#      end
+      else
+        redirect_to banddash_index_path, notice: 'Error during song creation'
+      end
     else
       redirect_to banddash_index_path, notice: 'Error during song creation'
     end
