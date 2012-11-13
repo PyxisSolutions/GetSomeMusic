@@ -71,8 +71,7 @@
     </table>
     <button id="btnTrack" style="margin-bottom:10px;" class="btn btn-success" onclick="btnTrack();">Create a new track</button>
     <div id="newTrack" style="display:none;">
-      <%# if current_user.band.has_subscription(band) %>
-        <%= true == current_user.band.has_subscription(current_user.band)  %>
+      <% if current_user.band.has_subscription(current_user.band) %>
         <%= form_for Song.new, :html => { :multipart => true } do |f| %>
           <%= f.text_field :name, :placeholder => "Song name" %><br/>
           <%= f.text_field :cost, :placeholder => "Cost ( £ )" %><br/>
@@ -80,7 +79,7 @@
           mp3 file: <%= f.file_field :mp3 %><br/>
           <%= f.submit 'Upload new track', :class => "btn btn-success" %>&nbsp;&nbsp;
           <button type="button" class="btn btn-danger" onclick="newTrack();">Cancel</button>
-        <%# end %>
+        <% end %>
       <% end %>
     </div>
   </div>
