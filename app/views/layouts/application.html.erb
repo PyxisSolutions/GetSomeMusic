@@ -8,27 +8,32 @@
   <%= yield(:head) %>
 </head>
 <body>
-  <div class="container">
+  <div class="container" style="border: 1px solid lightgray">
     <div class="navbar navbar-inverse navbar-fixed-top">
       <div class="navbar-inner">
-        <div class="container" style="padding:22px 20px">
+        <div class="container" style="padding:20px 20px 0px 20px">
           <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
             <span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
           </a>
           <a class="brand" style="padding-right:250px;" href="#">♫</a>
           <div class="nav-collapse collapse">
-            <ul class="nav">
-              <li><%= link_to "Home",  root_path %></li>
-              <% if user_signed_in? %>
-                <% if current_user.try(:admin?) %><li><%= link_to "Admin Dashboard", admindash_index_path %></li><% end %>
-                <% if current_user.role == "user" %><li><%= link_to "Dashboard", userdash_index_path %></li>
-                <% else %><li><%= link_to "Dashboard", banddash_index_path %></li><% end %>
-                <li><%= link_to "Sign out",  destroy_user_session_path, :method => :delete %></li><br/>
-              <% else %>
-                <li><%= link_to "Sign in", new_user_session_path %></li>
-                <li><%= link_to "Sign up",  new_user_registration_path %></li>
+            <div id="breadcrumbs">
+            <ul class="breadcrumb" style="padding:0px;margin:0px;float:right;margin-right:130px;background-color:black">
+              <% session[:trail].each do |breadcrum| %>
+              <li><a style="text-shadow: 0px 0px white;color:white;font-size:17px;" 
+                     href="<%= breadcrum.to_s %>">
+                <% if breadcrum.include? 'home'%>
+                  Home
+                <% elsif breadcrum.include? 'admin' %>
+                  Admin
+                <% else %>
+                  Song
+                <% end %>
+                </a> <span style="font-size:17px;color:#FFFF33;" class="divider">/</span>
+              </li>
               <% end %>
             </ul>
+            </div>
           </div>
         </div>
       </div>
@@ -36,9 +41,20 @@
     
     <div>
       <ul class="nav nav-tabs">
-        <li class="active" style="margin-left: 26%"><a href="#">Home</a></li>
-        <li><a href="#">Dashboard</a></li>
-        <li><a href="#">Sign out</a></li>
+        <li style="margin-left: 33%" <% if url_for.include? 'home' %> class="active" <% end %>><%= link_to "Home",  root_path %></li>
+        <% if user_signed_in? %>
+          <% if current_user.try(:admin?) %>
+            <li <% if url_for.include? 'admin' %> class="active" <% end %>><%= link_to "Admin Dashboard", admindash_index_path %></li>
+          <% end %>
+          <% if current_user.role == "user" %><li <% if url_for.include? 'user' %> class="active" <% end %>><%= link_to "Dashboard", userdash_index_path %></li>
+          <% else %>
+            <li <% if url_for.include? 'band' %> class="active" <% end %>><%= link_to "Dashboard", banddash_index_path %></li>
+          <% end %>
+          <li><%= link_to "Sign out",  destroy_user_session_path, :method => :delete %></li><br/>
+        <% else %>
+          <li <% if url_for.include? 'login' %> class="active" <% end %>><%= link_to "Sign in", new_user_session_path %></li>
+          <li <% if url_for.include? 'register' %> class="active" <% end %>><%= link_to "Sign up",  new_user_registration_path %></li>
+        <% end %>
       </ul>
     </div>
     

@@ -11,3 +11,5 @@
  *= require_self
  *= require_tree .
  */
+ .sitecrumbs{position:static;opacity:.4;margin-top:-20px;float:right;color:white;margin-right: 40px;}
+ .sitecrumbs:hover {opacity:1}

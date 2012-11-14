@@ -4,7 +4,14 @@ class AdmindashController < ApplicationController
   before_filter :verify_admin
   
   def index
+    session[:trail] ||= Array.new
+    if session[:trail].size > 4
+      session[:trail].delete_at(0)
+    end
     
+    if session[:trail].first != url_for(:only_path => true)
+      session[:trail].push(url_for(:only_path => true))
+    end
   end
   
   def verify_admin
