@@ -128,7 +128,6 @@ function createErrorHandlerSearch(data) {
         '<div class="alert alert-error">' +
           '<button type="button" class="close" data-dismiss="alert">×</button>' +
           '<h3 style="font-weight: 300">Awh Snap =/</h3>' +
-          '<p style="font-size: 16px; font-weight: 300">' +
             'A problem occured when we tried to display the search results<br/>' +
             'Please <strong>refresh</strong> the page and everything should be back to normal!' +
           '</p>' +

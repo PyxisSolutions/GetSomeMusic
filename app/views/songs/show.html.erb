@@ -1,7 +1,7 @@
 <div style="margin-top:10px;float:right;min-width:100px;">
   <h5>Tags:</h5>
   <% @song.tag_list.each do |tag| %>
-    <%= tag %><br/>
+    <span style="padding: 3px 10px;font-size: 12px;" class="badge badge-info"><%= tag %></span><br/>
   <% end %>
 </div>
 <h2><%= @song.name %></h2>

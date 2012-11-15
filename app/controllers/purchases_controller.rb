@@ -48,7 +48,7 @@ class PurchasesController < ApplicationController
         '<tr>' +
           '<td>' + @song.band.name + '</td>' +
           '<td>' + @song.name + '</td>' +
-          '<td>' + @price + '0' + '</td>' +
+          '<td>&#163; ' + @price  + '</td>' +
           '<td>' + p.created_at.strftime("%d %b %Y") + '</td>' +
           '<td>' + '<a href="/home/download?sid=' + @song.id.to_s + '">Download</a>' + '</td>' +
         '</tr>'
