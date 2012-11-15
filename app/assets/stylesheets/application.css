@@ -14,8 +14,10 @@
  .sitecrumbs{position:static;opacity:.4;margin-top:-20px;float:right;color:white;margin-right: 40px;}
  .sitecrumbs:hover{opacity:1}
  .foot{font-weight: 100;text-align:center;font-size:20px;padding:20px;color:white;background-color:#333;-webkit-box-shadow: 5px 5px #000000;}
- .foot label{margin:0px 15px;opacity:.4;font-size:20px;font-family:'Lucida Sans Unicode', 'Lucida Grande', sans-serif;}
+ .foot label{margin:0px 15px;font-size:20px;font-family:'Lucida Sans Unicode', 'Lucida Grande', sans-serif;}
  .footinner label:hover{font-size:24px;opacity:1} 
+ .footinner a {opacity:.4;font-size:22px;font-family:'Lucida Sans Unicode', 'Lucida Grande', sans-serif;color:white;}
+ .footinner a:hover {font-size:26px;opacity:1;color:white;}
  .footinner img{opacity:.3}
  .footinner img:hover{opacity:1}
  .nav-tabs a{color:white;} 

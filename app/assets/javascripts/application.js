@@ -16,7 +16,8 @@
 //= require_tree .
 
 $(document).ready(function(){
-   $('td').click(function(){
+    
+    $('td').click(function(){
        $('.buyRow').css("background-color","white");
        $('.buyRow').css("color","black");
        
@@ -24,13 +25,13 @@ $(document).ready(function(){
            $(this).parent().css("background-color","#51A351");
            $(this).parent().css("color","white");
        }
-   });
+    });
    
-   $('#srchField').onEnter(function(){
+    $('#srchField').onEnter(function(){
        searchTaggedSongs($('#srchField').val())
-   });
+    });
    
-   $("#srchField").focus(function() {
+    $("#srchField").focus(function() {
         $('#searchTips').slideDown();
     }).blur(function() {
         $('#searchTips').slideUp();
@@ -133,6 +134,11 @@ function createErrorHandlerSearch(data) {
           '</p>' +
         '</div>'
     );
+}
+
+function showPopout(){
+    $('a[rel=popover]').popover();
+    event.preventDefault();
 }
 
 

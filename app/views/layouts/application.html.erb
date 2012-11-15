@@ -45,6 +45,7 @@
       </div>
     </div><br/><br/><br/><br/><br/>
     
+    
     <div>
       <ul class="nav nav-tabs">
         <li style="margin-left: 28%" <% if url_for.include? 'home' %> class="active" <% end %>><%= link_to "Home",  root_path, :style => 'padding:8px 40px;' %></li>
@@ -59,7 +60,10 @@
           <li><%= link_to "Sign out",  destroy_user_session_path, :method => :delete %></li><br/>
         <% else %>
           <li <% if url_for.include? 'login' %> class="active" <% end %>><%= link_to "Sign in", new_user_session_path %></li>
-          <li <% if url_for.include? 'register' %> class="active" <% end %>><%= link_to "Sign up",  new_user_registration_path %></li>
+          <li <% if url_for.include? 'register' %> class="active" <% end %>>
+            <a href="#" class="link" rel="popover" data-original-title="<a href='<%= new_user_registration_path %>'>Register as a User</a>"
+               data-content="<a href='<%= new_user_registration_path + "?music=true" %>'> Register as a Band</a>" onclick="showPopout();">Register</a>
+          </li>
         <% end %>
       </ul>
     </div>
@@ -159,16 +163,36 @@
   <div id="footer" class="foot">
     <br/>
     <div class="footinner">
-      <label>About</label> 
-      <label>Terms</label> 
-      <a href="<%= Rails.root + 'CreativeLicense.pdf' %>"><label>Song Licence</label></a>
-      <label>Crediting System</label>
+      <a href='#'><label>About</label></a>
+      <a href="#cookieModal" role="button" data-toggle="modal"><label>Cookie Usage</label></a>
+      <a href='#'><label>Terms</label></a>
+      <a href="<%= '/CreativeLicense.pdf' %>"><label>Song Licence</label></a>
+      <a href='#'><label>Crediting System</label></a>
       <br/><br/><% y = YAML.load_file( Rails.root + 'config/social.yml') %>
       <a href="<%= y.fetch('twitter') %>"><%= image_tag(Rails.root + '/assets/twitter-icon.png', :alt => "twitter", :style => 'margin-right:30px;height:70px;width:70px;') %></a>
       <a href="<%= y.fetch('facebook') %>"><%= image_tag(Rails.root + '/assets/facebook-icon.png', :alt => "facebook", :style => 'height:70px;width:70px;') %></a>
       <a href="#"><%= image_tag(Rails.root + '/assets/rss-icon.png', :alt => "rss feed", :style => 'margin-left:30px;height:70px;width:70px;') %></a>
     </div>
-    <br/><br/><br/>
+    <br/><br/><br/> 
+  </div>
+  
+  <div id="cookieModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+      <h2 id="myModalLabel"><%= image_tag(Rails.root + '/assets/cookie.png', :style => 'height:120px;width:120px;margin-right:30px;') %>Our cookie policy</h2>
+    </div>
+    <div class="modal-body">
+      We use cookies to help you with navigation and to ensure that we give you the best experience on our website. 
+      We do not use cookies for advertising in any way, shape or form. If you continue without
+      changing your settings we will asume that you are happy to receive all of GetSomeMusic's coookies, however
+      if you do not like or agree with our cookie policy
+      <a href="https://www.lifetechnologies.com/uk/en/home/technical-resources/How-to-change-your-browser-cookie-settings.html">
+        You can change your cookie preferences</a>.
+    </div>
+    <div class="modal-footer" style="text-align: center">
+      <p><strong >Thank you for taking the time to review this piece of information.</strong></p>
+    </div>
   </div>
 </body>
 </html>
+
