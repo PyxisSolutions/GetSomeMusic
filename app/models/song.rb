@@ -8,10 +8,19 @@ class Song < ActiveRecord::Base
                     :dropbox_credentials => "#{Rails.root}/config/dropbox.yml",
                     :dropbox_options => { :path => proc { "#{mp3.original_filename}"}}
                     #:url => "http://dl.dropbox.com/u/24593987/" + "#{mp3.original_filename}"
+
+  before_post_process :rename_mp3
+
   
   belongs_to :band
   belongs_to :album
   
   attr_accessible :band_id, :cost, :download_url, :name, :user_id, :mp3, :tag_list
   acts_as_taggable
+  
+  
+  def rename_mp3
+    extension = File.extname(mp3_file_name).downcase
+    self.mp3.instance_write :file_name, "#{Time.now.to_i.to_s}#{extension}"
+  end
 end

@@ -15,6 +15,7 @@
     <% end %>
   <% end %>
 </table>
+<div>
 <% if !current_user.purchases.first.nil? %>
   <button id="btnAllSongs" class="btn btn-large btn-block btn-info" onclick="displayAllSongs();">Load all my songs</button>
   <br/>
@@ -41,6 +42,7 @@
   <% end %>
   <% @bands.uniq.each do |band| %>
     <span style="line-height: 50px;margin-right: 30px;padding: 4px 10px;font-size: 27px;" class="badge badge-inverse"><a style="color:white" href="/banddash/<%= @band.id %>"><%= @band.name %></a></span>
-  <% end %> <br/>
-<div>
+  <% end %>
+  <br/>
+</div>
   
