@@ -11,7 +11,7 @@ class Band < ActiveRecord::Base
     # to use: <%= track.band.has_subscription %>
     if !band.subscription.nil?
       if band.subscription.expires > Date.today.to_time
-        puts 'SUBEXP' + band.subscription.expires
+        puts band.subscription.expires.to_time
         puts 'DATETODAY' + Date.today.to_time
         puts (band.subscription.expires > Date.today.to_time)
         
