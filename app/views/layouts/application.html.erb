@@ -8,7 +8,7 @@
   <%= yield(:head) %>
 </head>
 <body style="background-color: #7A7A7A">
-  <div class="container">
+  <div class="container" style="padding-bottom: 30px;">
     <div class="navbar navbar-inverse navbar-fixed-top">
       <div class="navbar-inner">
         <div class="container" style="padding:20px 20px 0px 20px">
@@ -161,12 +161,12 @@
     <div class="footinner">
       <label>About</label> 
       <label>Terms</label> 
-      <label>Song Licence</label>
+      <a href="<%= Rails.root + 'CreativeLicense.pdf' %>"><label>Song Licence</label></a>
       <label>Crediting System</label>
       <br/><br/><% y = YAML.load_file( Rails.root + 'config/social.yml') %>
-      <a href="<%= y.fetch('twitter') %>"><%= image_tag("http://icons.iconarchive.com/icons/arrioch/oled-social/256/twitter-icon.png", :alt => "twitter", :style => 'margin-right:30px;height:70px;width:70px;') %></a>
-      <a href="<%= y.fetch('facebook') %>"><%= image_tag("http://icons.iconarchive.com/icons/arrioch/oled-social/256/facebook-icon.png", :alt => "facebook", :style => 'height:70px;width:70px;') %></a>
-      <a href="#"><%= image_tag("http://icons.iconarchive.com/icons/arrioch/oled-social/256/rss-icon.png", :alt => "rss feed", :style => 'margin-left:30px;height:70px;width:70px;') %></a>
+      <a href="<%= y.fetch('twitter') %>"><%= image_tag(Rails.root + '/assets/twitter-icon.png', :alt => "twitter", :style => 'margin-right:30px;height:70px;width:70px;') %></a>
+      <a href="<%= y.fetch('facebook') %>"><%= image_tag(Rails.root + '/assets/facebook-icon.png', :alt => "facebook", :style => 'height:70px;width:70px;') %></a>
+      <a href="#"><%= image_tag(Rails.root + '/assets/rss-icon.png', :alt => "rss feed", :style => 'margin-left:30px;height:70px;width:70px;') %></a>
     </div>
     <br/><br/><br/>
   </div>
