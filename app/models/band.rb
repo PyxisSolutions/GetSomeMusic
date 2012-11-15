@@ -17,8 +17,9 @@ class Band < ActiveRecord::Base
         
         return true
       end
-        return false
     end
+    
+    return false
   end
   
 end
