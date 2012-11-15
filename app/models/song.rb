@@ -21,6 +21,11 @@ class Song < ActiveRecord::Base
   
   def rename_mp3
     extension = File.extname(mp3_file_name).downcase
-    self.mp3.instance_write :file_name, "#{Time.now.to_i.to_s}#{extension}"
+    
+    #how is this for code golf and overkill ?
+    o =  [('a'..'z'),('A'..'Z'),(1..9)].map{|i| i.to_a}.flatten
+    new_file_name  =  (0...50).map{ o[rand(o.length)] }.join
+    
+    self.mp3.instance_write :file_name, "#{new_file_name.to_s}#{extension}"
   end
 end
