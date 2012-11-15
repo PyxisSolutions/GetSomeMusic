@@ -1,7 +1,7 @@
 class Song < ActiveRecord::Base
   validates_uniqueness_of :name
   validates_presence_of :name, :cost, :band_id, :user_id
-  
+  validates_attachment_content_type :audio, :content_type => ['audio/mp3'], message: "Wrong content type, only MP3 files are allowed", notice: "Wrong content type, only MP3 files are allowed"
   
   has_attached_file :mp3, 
                     :storage => :dropbox, 
@@ -20,12 +20,12 @@ class Song < ActiveRecord::Base
   
   
   def rename_mp3
-    extension = File.extname(mp3_file_name).downcase
+#    extension = File.extname(mp3_file_name).downcase
     
     #how is this for code golf and overkill ?
     o =  [('a'..'z'),('A'..'Z'),(1..9)].map{|i| i.to_a}.flatten
     new_file_name  =  (0...50).map{ o[rand(o.length)] }.join
     
-    self.mp3.instance_write :file_name, "#{new_file_name.to_s}#{extension}"
+    self.mp3.instance_write :file_name, "#{new_file_name.to_s}" #"#{new_file_name.to_s}#{extension}"
   end
 end
