@@ -149,6 +149,6 @@
 <div style="background-color: black;color:white;">
   <% if !current_user.band.subscription.nil? and !current_user.band.subscription.expires.nil? %>
   Exipres: <% current_user.band.subscription.expires %><br/>
-  Date to day to time <%= Date.today.to_time %> To i <% Date.today.to_i %>
+  Date to day to time <%= Date.today.to_time %> To i <% Date.today %>
   <% end %>
 </div>
