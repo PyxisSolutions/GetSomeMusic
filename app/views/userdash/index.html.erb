@@ -20,13 +20,18 @@
   <br/>
   <hr/>
   
-  <% @purchases = current_user.purchases.each %>
+  <% @purchases = current_user.purchases %>
   <h4>My tags</h4>
+  <% @tags = Array.new %>
+  
   <% @purchases.each do |p| %>
     <% Song.find(p.song_id).tag_list.each do |tag| %>
+      <% @tags << tag %>
       <span style="line-height: 40px;margin-right: 30px;padding: 4px 10px;font-size: 17px;" class="badge badge-important"><%= tag %></span>
     <% end %>
   <% end %>
+  <%= @tags.count %>    
+  <%= @tags.uniq.count %>    
       
   <h4>My Bands</h4>
   <% @purchases.each do |p| %>
