@@ -150,7 +150,7 @@
   <% if !current_user.band.subscription.nil? and !current_user.band.subscription.expires.nil? %>
   Exipres: <% current_user.band.subscription.expires %><br/>
   Date to day to time <%= Date.today.to_time %> To i <% Date.today %>
-      SUB? <%= current_user.band.has_subscription(current_user.band) %>
+     <br/> SUB? <%= current_user.band.has_subscription(current_user.band) %>
 
   <% end %>
 </div>

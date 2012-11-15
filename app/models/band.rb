@@ -10,25 +10,11 @@ class Band < ActiveRecord::Base
   def has_subscription(band)
     # to use: <%= track.band.has_subscription %>
     if !band.subscription.nil?
-      if band.subscription.expires > Date.today.to_time
-        puts band.subscription.expires.to_time
-        puts Date.today.to_time
-        puts (band.subscription.expires > Date.today.to_time)
+      if band.subscription.expires > Time.now
         
         return true
-        
       end
-        puts 'IN ERE LEOL'
-        puts 'IN ERE LEOL'
-        puts 'IN ERE LEOL'
     end
-        puts 'FADS'
-        puts 'FADS'
-        puts 'FADS'
-        puts 'FADS'
-        puts 'FADS'
-        puts 'FADS'
-        puts 'FADS'
     
     return false
   end
