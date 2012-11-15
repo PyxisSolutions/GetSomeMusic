@@ -45,4 +45,8 @@ class BanddashController < ApplicationController
       redirect_to banddash_index_path, notice: 'An error occured.'     
     end
   end
+  
+  def show
+    @band = Band.find(params[:id])
+  end
 end

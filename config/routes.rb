@@ -1,5 +1,6 @@
 GetSomeMusic::Application.routes.draw do
   
+  post "admindash/social"
   post "transactions/notify"
   get "transactions/show"
   get "transactions/subscribe"
@@ -34,7 +35,7 @@ GetSomeMusic::Application.routes.draw do
   resources :songs
   resources :transactions
   
-  resources :banddash, :only => [:index, :create, :destroy]
+  resources :banddash, :only => [:index, :create, :destroy, :show]
   resources :userdash, :only => [:index]
   resources :admindash, :only => [:index]
   

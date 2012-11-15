@@ -45,10 +45,16 @@
   <% end %>
 </table>
 
-<br/><br/><h3>Other stuff...</h3>
-<% Subscription.all.each do |sub| %>
-  ID: <%= sub.id %>
-  UID: <%= sub.user_id %>
-  Band: <%= sub.band.name %>
-  Total: <%= sub.total_purchased %><br/>
-<% end %>
+<div id="social" class="alert social">
+  <h3 style="color:#333;margin-bottom:20px;">Social Media</h3>
+  <p style="font-size:14px;color:black;">The images at the bottom of the page are links to twitter and facebook.
+    You can substitute the default websites with the pages of your organisation by adding your pages to the below textboxes.
+  </p>
+  <%#= form_for current_user %>
+  <% y = YAML.load_file( Rails.root + 'config/social.yml') %><br/>
+  <%= form_for 'admindash/social', :url => url_for(:action => 'social') do |f| %>
+    <%= f.text_field :facebook,:name => 'facebook', :value => '', :placeholder => "Website Facebook page" %> (<%= y['facebook'] %>)<br/>
+    <%= f.text_field :twitter,:name => 'twitter', :value => '', :placeholder=> "Website Twitter page" %> (<%= y['twitter'] %>)<br/>
+    <%= f.submit 'Update Social links', :class => "btn btn-warning" %>  
+  <% end %>
+</div>

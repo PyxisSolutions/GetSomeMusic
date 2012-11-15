@@ -19,4 +19,23 @@ class AdmindashController < ApplicationController
       redirect_to root_path, notice: 'You do not have permissions to acces this page'
     end
   end
+  
+  def social
+    YAML.load_file( Rails.root + 'config/social.yml')
+    q = Hash.new  
+    q = { 
+     "facebook"=>"https://facebook.com", 
+     "twitter"=>"https://twitter.com"
+    } 
+   
+   if !params['facebook'].nil? and params['facebook'] != ""
+     q['facebook'] = params['facebook'] 
+   end
+   if !params['twitter'].nil? and params['twitter'] != ""
+     q['twitter'] = params['twitter']
+   end   
+    File.open(Rails.root + 'config/social.yml', "w") {|f| f.write(q.to_yaml) }
+   
+    redirect_to admindash_index_path, notice: 'successfully updated social links!'
+  end
 end

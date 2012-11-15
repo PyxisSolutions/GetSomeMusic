@@ -1,0 +1,21 @@
+<h2><%= @band.name %></h2>
+
+<h3>All our songs</h3>
+<table class="table table-hover table-striped">
+  <tr class="info"><td>Song</td><td>Published</td><td>Downloaded</td><td>View</td></tr>
+  <% @band.songs.each do |track| %>
+    <tr>
+      <td><%= track.name %></td>
+      <td><%= track.created_at.strftime("%d %b %y") %></td>
+      <td><%= track.sales %> times</td>
+      <td><a href="/songs/<%= track.id %>"><%= image_tag '/assets/eye.png', :size => "35x30", :id => "show" %></a></td>
+    </tr>
+  <% end %>
+</table>
+
+<div id="bandInfo">
+  <h3>About our band</h3>
+  <p>
+    We have <%= @band.members %> members in our band.
+  </p>
+</div>
