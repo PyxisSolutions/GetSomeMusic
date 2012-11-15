@@ -28,7 +28,7 @@ class BanddashController < ApplicationController
       @band.subscription.total_purchased = 0;
       @band.subscription.expires = Time.now
       
-      if @band.save
+      if @band.save and @band.subscription.save
         redirect_to banddash_index_path
       else
         redirect_to banddash_index_path, notice: 'Successfully created your band!'      
