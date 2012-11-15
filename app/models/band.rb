@@ -16,8 +16,19 @@ class Band < ActiveRecord::Base
         puts (band.subscription.expires > Date.today.to_time)
         
         return true
+        
       end
+        puts 'IN ERE LEOL'
+        puts 'IN ERE LEOL'
+        puts 'IN ERE LEOL'
     end
+        puts 'FADS'
+        puts 'FADS'
+        puts 'FADS'
+        puts 'FADS'
+        puts 'FADS'
+        puts 'FADS'
+        puts 'FADS'
     
     return false
   end
