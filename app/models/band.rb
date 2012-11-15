@@ -12,7 +12,7 @@ class Band < ActiveRecord::Base
     if !band.subscription.nil?
       if band.subscription.expires > Date.today.to_time
         puts band.subscription.expires.to_time
-        puts 'DATETODAY' + Date.today.to_time
+        puts Date.today.to_time
         puts (band.subscription.expires > Date.today.to_time)
         
         return true
