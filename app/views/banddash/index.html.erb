@@ -70,8 +70,10 @@
           <%= f.text_field :cost, :placeholder => "Cost ( £ )" %><br/>
           <%= f.text_field :tag_list, :placeholder => "Tags, separated by commas" %><br/>
           mp3 file: <%= f.file_field :mp3 %><br/>
-          <%= f.submit 'Upload new track', :class => "btn btn-success" %>&nbsp;&nbsp;
-          <button type="button" class="btn btn-danger" onclick="newTrack();">Cancel</button>    
+          <!-- a href="#loadingModal" role="button" data-toggle="modal" -->
+            <%= f.submit 'Upload new track', :class => "btn btn-success" %>&nbsp;&nbsp;
+          <!-- /a -->
+          <button type="button" class="btn btn-danger">Cancel</button>    
         <% end %>
       </div>
     <% else %>
@@ -146,12 +148,9 @@
   </div>
 <% end %><br/>
 
-<div style="background-color: black;color:white;">
-  <% if !current_user.band.subscription.nil? and !current_user.band.subscription.expires.nil? %>
-  Exipres: <%= current_user.band.subscription.expires.to_time %><br/>
-  Exipres: <%= current_user.band.subscription.expires %><br/>
-  Date to day to time <%= Time.now.to_time %> <br/>To today <%= Time.now %>
-     <br/> SUB? <%= current_user.band.has_subscription(current_user.band) %>
-
-  <% end %>
+<div style="position:fixed;width:700px;padding:30px;margin-top: -140px;box-shadow: none;outline:none;border:0px;background-color: transparent;color:white;" id="loadingModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="loadingModalLabel" aria-hidden="true">
+  <div id="lodd" class="modal-body">
+    <h1 style="font-size: 132px">Loading…</h1>
+  </div>
 </div>
+<script type="text/javascript" src="https://jackrugile.com/jrumble/js/jrumble.1.1.min.js"></script>

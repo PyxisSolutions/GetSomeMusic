@@ -3,7 +3,7 @@
   before_filter :authenticate_user!
 
   def create  
-    if !current_user.band.nil?
+    unless current_user.band.nil?
       @song = Song.new(params[:song])
       @song.sales = 0
       @song.user_id = current_user.id
@@ -12,7 +12,7 @@
       if @song.save
           redirect_to banddash_index_path, notice: 'Successfully uploaded song.'
       else
-        redirect_to banddash_index_path, notice: 'Error during song creation'
+        redirect_to banddash_index_path, notice: 'Error during song upload'
       end
     else
       redirect_to banddash_index_path, notice: 'Error during song creation'
