@@ -147,7 +147,8 @@ function showPopout(){
 }
 
 function showLoadModal(){
-    $('#myModal').modal('show')
+    $("#new_song").submit();
+    $('#loadingModal').modal('show');
 }
 
 /*
