@@ -146,6 +146,9 @@ function showPopout(){
     event.preventDefault();
 }
 
+function showLoadModal(){
+    $('#myModal').modal('show')
+}
 
 /*
  * Hooks the ENTER keypress to the textbox
