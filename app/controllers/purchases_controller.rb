@@ -42,7 +42,7 @@ class PurchasesController < ApplicationController
     
     current_user.purchases.all.reverse.each do |p|
       @song = Song.find(p.song_id)
-      @price = (p.value.to_d / 100).to_s
+      @price = (p.value.to_f / 100).to_s
       
       @restoftable += 
         '<tr>' +
