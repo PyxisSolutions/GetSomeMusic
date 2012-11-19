@@ -15,16 +15,13 @@ class CreditsController < ApplicationController
   
   def update #users are redirected here after purchasing credits and after buying songs
     
-#    @credit = current_user.credit
-#    # update transaction and user credit here
-#    @transaction = Transaction.find(params[:tid])
-#    @transaction.successful = true;
-#    @credit.count += @transaction.credits_value; #dont want to transfer this over url... users can give themselves more credits if we did
+    @transaction = Transaction.find(params[:tid])
 
-#    if @transaction.save and @credit.save  
+    if @transaction.successful  
         redirect_to home_index_path, notice: "Successfully purchased " + @transaction.credits_value.to_s  + " credits."
-#    end
-    
+    else
+        redirect_to home_index_path, notice: "Purchase was nit completed. "      
+    end    
   rescue #paying for credits process should be atomic
     @transaction.successful = false
     @transaction.save
