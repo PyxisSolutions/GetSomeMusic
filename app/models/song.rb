@@ -9,8 +9,8 @@ class Song < ActiveRecord::Base
                     :storage => :dropbox, 
                     :dropbox_credentials => "#{Rails.root}/config/dropbox.yml",
                     #../ is beacuse gem only allows upload to dropbox's Public folder
-#                    :dropbox_options => { :path => proc { "../mp3#{mp3.original_filename}"}} 
-                    :dropbox_options => { :path => proc { "#{mp3.original_filename}"}} 
+                    :dropbox_options => { :path => proc { "../mp3/#{mp3.original_filename}"}} 
+#                    :dropbox_options => { :path => proc { "#{mp3.original_filename}"}} 
 
   before_post_process :rename_mp3
 

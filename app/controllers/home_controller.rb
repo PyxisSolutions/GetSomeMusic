@@ -31,9 +31,9 @@ class HomeController < ApplicationController
       
       FileUtils.touch @songuri
       File.open(@songuri, "wb") do |saved_file|
-        
+        open("https://www.dropbox.com/home/Public/../mp3/" + @song.mp3_file_name, 'rb') do |read_file| 
 #        open("https://dl-web.dropbox.com/get/mp3/" + @song.mp3_file_name, 'rb') do |read_file|
-        open("https://dl.dropbox.com/u/24593987/" + @song.mp3_file_name, 'rb') do |read_file|
+        #open("https://dl.dropbox.com/u/24593987/" + @song.mp3_file_name, 'rb') do |read_file|
 #        open("https://www.dropbox.com/s/nymgyic90ut7v26/" + @song.mp3_file_name, 'rb') do |read_file|
           saved_file.write(read_file.read)
         end
