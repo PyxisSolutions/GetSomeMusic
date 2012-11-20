@@ -92,7 +92,7 @@
               <div class="accordion-heading">
                 <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
                   <% if user_signed_in? %>
-                    <strong>Signed in </strong>(<%= current_user.email %>)
+                    <strong>Signed in </strong>
                   <% else %>
                     <strong>Not Signed in</strong>
                   <% end %>
@@ -101,7 +101,13 @@
               <div id="collapseOne" class="accordion-body collapse in">
                 <div class="accordion-inner">
                   <% if user_signed_in? %>
-                  <p>Welcome!<br/></p>  
+                  <p>
+                    <% if user_signed_in? %>
+                      <%= current_user.email %>
+                    <% else %>
+                      <strong>Not Signed in</strong>
+                    <% end %><br/>
+                  </p>  
                   <% else %>
                   <p>To purchase credits and get songs please <%= link_to 'Sign in', new_user_session_path %></p>
                   <% end %>

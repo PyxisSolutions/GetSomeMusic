@@ -1,7 +1,10 @@
 class Album < ActiveRecord::Base
   validates_uniqueness_of :name
   
-  has_attached_file :coverart
+  has_attached_file :coverart,
+                    :storage => :dropbox, 
+                    :dropbox_credentials => "#{Rails.root}/config/dropbox.yml",
+                    :dropbox_options => { :path => proc { "#{coverart.original_filename}"}} 
   
   validates_attachment_presence :coverart
   validates_attachment_size :coverart, :less_than => 5.megabytes

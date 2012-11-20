@@ -33,7 +33,7 @@
   <div class="album">
     <div onclick="innerAlbumToggle();">
       <div class="albumArt"><% if !@first_album.coverart.content_type.nil? %>
-          <%= image_tag @first_album.coverart.url, :size => "45x45" %>&nbsp;
+          <%= image_tag "https://dl.dropbox.com/u/24593987/" + @first_album.coverart_file_name, :size => "45x45" %>&nbsp;
         <% end %>
       </div>
       <h4><%= @first_album.band.name %> - <%= @first_album.name %></h4>
