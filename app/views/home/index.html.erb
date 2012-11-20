@@ -14,12 +14,14 @@
     </tr>  
   <% if !Song.first.nil? %>
     <% Song.all.reverse.each do |track| %>
-    <tr>
-      <td><a href="/banddash/<%= track.band.id %>"><%= track.band.name %></a></td>
-      <td><%= track.name %><%= track.band.has_subscription(track.band) %></td>
-      <td><%= number_with_precision(track.cost.to_f / 100, :precision => 2) %></td>
-      <td><a href="/songs/<%= track.id %>"><%= image_tag '/assets/eye.png', :size => "35x30", :id => "show" %></a></td>
-    </tr>
+      <% if track.band.has_subscription(track.band) %>
+      <tr>
+        <td><a href="/banddash/<%= track.band.id %>"><%= track.band.name %></a></td>
+        <td><%= track.name %></td>
+        <td><%= number_with_precision(track.cost.to_f / 100, :precision => 2) %></td>
+        <td><a href="/songs/<%= track.id %>"><%= image_tag '/assets/eye.png', :size => "35x30", :id => "show" %></a></td>
+      </tr>
+      <% end %>
     <% end %>
   <% end %>
   </table>
