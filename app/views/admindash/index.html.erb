@@ -1,5 +1,22 @@
 <h2>Admin dashboard <small>Statistics & Users</small></h2><hr/></hr>
 
+<div class="alert alert-error">
+  <h2 onclick="$('#innerFinanceSetup').stop().slideToggle();">Finance setup<small> (click to show/hide)</small></h2>
+  <div id="innerFinanceSetup">
+    <% y = YAML.load_file( Rails.root + 'config/fa4afsy453sfa.yml') %><br/>
+    
+    <%= form_for 'admindash/financial', :url => url_for(:action => 'financial') do |f| %>
+      Paypal account:<br/><%= f.text_field :account,:name => 'account', :value => '', :placeholder => y['business'] %><br/>
+      Currency code:<br/><%= f.text_field :currency,:name => 'currency', :value => '', :placeholder=> y['currency-code'] %><br/>
+      Is the website live? <strong>If yes leave this fiend blank if not input ".sandbox" without the quotes</strong>
+      <br/><%= f.text_field :sandbox,:name => 'sandbox', :value => '', :placeholder=> y['sandbox'] %><br/>
+      Domain name of your host:<br/><%= f.text_field :domain,:name => 'domain', :value => '', :placeholder=> y['domain'] %><br/>
+      <%= f.submit 'Update Social links', :class => "btn btn-warning" %>  
+    <% end %>
+  </div>
+</div>
+
+
 <h3>All users</h3>
 <table style="width:100%" class="table table-striped">
   <tr class="info"><td>UID</td><td>Email</td><td>Money Spent</td><td></td></tr>
@@ -50,7 +67,6 @@
   <p style="font-size:14px;color:black;">The images at the bottom of the page are links to twitter and facebook.
     You can substitute the default websites with the pages of your organisation by adding your pages to the below textboxes.
   </p>
-  <%#= form_for current_user %>
   <% y = YAML.load_file( Rails.root + 'config/social.yml') %><br/>
   <%= form_for 'admindash/social', :url => url_for(:action => 'social') do |f| %>
     <%= f.text_field :facebook,:name => 'facebook', :value => '', :placeholder => "Website Facebook page" %> (<%= y['facebook'] %>)<br/>

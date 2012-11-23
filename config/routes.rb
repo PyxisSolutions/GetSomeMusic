@@ -1,6 +1,7 @@
 GetSomeMusic::Application.routes.draw do
   
   post "admindash/social"
+  post "admindash/financial"
   post "transactions/notify"
   get "transactions/show"
   get "transactions/subscribe"

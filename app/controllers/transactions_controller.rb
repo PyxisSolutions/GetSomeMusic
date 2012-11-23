@@ -28,20 +28,29 @@ class TransactionsController < ApplicationController
       @transaction.credits_value = (params[:transaction][:credit].to_i * 100)
     end
     
+    #I was going to call it finance.yaml but it seems like a bad idea
+    y = YAML.load_file( Rails.root + 'config/fa4afsy453sfa.yml') 
+    
     if @transaction.save
+      
+      @sandbox = '.sandbox'
+      if y['sandbox'] == '' 
+        @sandbox = ""
+      end
+      
       values = {
-        :business => "sales_1351862433_biz@abv.bg", #should come from a file
+        :business => y['business'],
         :cmd => "_cart",
-        :currency_code => "GBP",
+        :currency_code => y['currency-code'],
         :quantity => 1,
         :amount_1 => @value,
         :item_name_1 => @item_name,
         :upload => "1",
-        :return => "https://getsomemusic.herokuapp.com/credits/update?tid=" + @transaction.id.to_s,
+        :return => "https://" + y['domain'] + "/credits/update?tid=" + @transaction.id.to_s,
         :invoice => @transaction.id.to_s,
-        :notify_url => "https://getsomemusic.herokuapp.com/transactions/notify/"
+        :notify_url => "https://" + y['domain'] + "/transactions/notify/"
       }
-      redirect_to "https://www.sandbox.paypal.com/cgi-bin/websrc?" + values.map { |param,value| "#{param}=#{value}" }.join("&")
+      redirect_to "https://www" + @sandbox + ".paypal.com/cgi-bin/websrc?" + values.map { |param,value| "#{param}=#{value}" }.join("&")
     end
     
   rescue
@@ -73,31 +82,21 @@ class TransactionsController < ApplicationController
         @user.band.subscription.total_purchased += 1
         @user.band.subscription.last_purchase = Date.today
         @user.band.subscription.expires = Date.today.to_time.advance(:months => 3).to_date   
-        puts 'BAND CREDIT AS IS: ' + @user.band.earned_company.to_s
-        puts 'BAND CREDIT AS IS: ' + @user.band.earned_company.to_s
-        puts 'BAND CREDIT AS IS: ' + @user.band.earned_company.to_s
         
         if !@user.band.earned_company.nil? 
           @user.band.earned_company += @transaction.credits_value
         else
           @user.band.earned_company = @transaction.credits_value
         end
-        puts 'AFTER CREDIT AS IS: ' + @user.band.earned_company.to_s
-        puts 'AFTER CREDIT AS IS: ' + @user.band.earned_company.to_s
-        puts 'AFTER CREDIT AS IS: ' + @user.band.earned_company.to_s
-
         
         @transaction.successful = true
-        
-        puts 'IN THE SUB SECTION!!!'
         @user.band.save and @user.band.subscription.save and @transaction.save
-        puts 'SAVED THE SUB'
 
       end
     end
     
     render :nothing => true
   rescue
-    puts '\n\n\n\nsomething went terribly wrong at transaction ' + @transaction.id.to_s + ' Please check the state of the transaction and contact the effected user: UID' + @user.id.to_s
+    puts 'Something went terribly wrong at transaction ' + @transaction.id.to_s + ' Please check the state of the transaction and contact the effected user: UID' + @user.id.to_s
   end
 end

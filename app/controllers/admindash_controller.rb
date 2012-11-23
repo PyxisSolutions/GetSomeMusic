@@ -38,4 +38,33 @@ class AdmindashController < ApplicationController
    
     redirect_to admindash_index_path, notice: 'successfully updated social links!'
   end
+  
+  def financial
+    finance_yaml = YAML.load_file( Rails.root + 'config/fa4afsy453sfa.yml')
+    q = Hash.new  
+    q = { 
+     "business" => finance_yaml['business'], 
+     "currency-code"=>finance_yaml['currency-code'],
+     "domain" => 'getsomemusic.herokuapp.com',
+     "sandbox" => '.sandbox'
+     }
+     
+    if !params['account'].nil? and params['account'] != ""
+      q['business'] = params['account'] 
+    end
+    if !params['currency'].nil? and params['currency'] != ""
+      q['currency-code'] = params['currency']
+    end 
+    
+    
+    if !params['sandbox'].nil? and params['sandbox'] != ""
+      q['sandbox'] = params['sandbox'] 
+    end
+    if !params['domain'].nil? and params['domain'] != ""
+      q['domain'] = params['domain']
+    end 
+    
+    File.open(Rails.root + 'config/fa4afsy453sfa.yml', "w") {|f| f.write(q.to_yaml) }
+    redirect_to admindash_index_path, notice: 'Successfully updated Paypal account info!'
+  end
 end
