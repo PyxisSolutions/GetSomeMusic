@@ -25,7 +25,6 @@ GetSomeMusic::Application.routes.draw do
   
   devise_for :users, :path_names => { :sign_up => "register", :sign_in => "login"}
   
-  
   resources :users do
     resources :purchases, :only => [:create, :destroy]
     resources :band, :only => [:create, :destroy] 

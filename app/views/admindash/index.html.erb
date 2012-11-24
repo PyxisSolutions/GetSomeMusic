@@ -1,8 +1,8 @@
 <h2>Admin dashboard <small>Statistics & Users</small></h2><hr/></hr>
 
 <div class="alert alert-error">
-  <h2 onclick="$('#innerFinanceSetup').stop().slideToggle();">Finance setup<small> (click to show/hide)</small></h2>
-  <div id="innerFinanceSetup">
+  <h2 id="fianceHeading" onclick="$('#innerFinanceSetup').stop().slideToggle();">Finance setup<small> (click to show/hide)</small></h2>
+  <div id="innerFinanceSetup" style="display:none;">
     <% y = YAML.load_file( Rails.root + 'config/fa4afsy453sfa.yml') %><br/>
     
     <%= form_for 'admindash/financial', :url => url_for(:action => 'financial') do |f| %>

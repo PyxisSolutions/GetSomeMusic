@@ -1,4 +1,4 @@
-  class SongsController < ApplicationController
+class SongsController < ApplicationController
 
   before_filter :authenticate_user!
 
@@ -8,11 +8,19 @@
       @song.sales = 0
       @song.user_id = current_user.id
       @song.band_id = current_user.band.id
-
-      if @song.save
+      
+      #so it turns out ptools can only check for binary files and 
+      #filemagic is too outdated and non-secure
+      #so i wrote my own by reading the first 3 bytes, they should always be ID3 for mp3 files.
+      #in other words it reads the head of the file which stores metadata about it.
+      if IO.read(params[:song][:mp3].open, 3).to_s == 'ID3'
+        if @song.save
           redirect_to banddash_index_path, notice: 'Successfully uploaded song.'
+        else
+          redirect_to banddash_index_path, notice: 'Error during song upload'
+        end
       else
-        redirect_to banddash_index_path, notice: 'Error during song upload'
+        redirect_to banddash_index_path, notice: 'Error ONLY mp3 files allowed, it ending in .mp3 does not make it a mp3 file!!!'
       end
     else
       redirect_to banddash_index_path, notice: 'Error during song creation'

@@ -32,7 +32,6 @@ class TransactionsController < ApplicationController
     y = YAML.load_file( Rails.root + 'config/fa4afsy453sfa.yml') 
     
     if @transaction.save
-      
       @sandbox = '.sandbox'
       if y['sandbox'] == '' 
         @sandbox = ""

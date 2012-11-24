@@ -23,3 +23,5 @@
  .nav-tabs a{color:white;} 
  .nav-tabs a:hover{color:black;}
  .social {padding:10px;background: url("http://i.imm.io/LDP6.png");border: 1px solid black;}
+ #fianceHeading {opacity:.5}
+ #fianceHeading:hover {opacity:1}
