@@ -17,13 +17,13 @@ class SongsController < ApplicationController
         if @song.save
           redirect_to banddash_index_path, notice: 'Successfully uploaded song.'
         else
-          redirect_to banddash_index_path, notice: 'Error during song upload'
+          redirect_to banddash_index_path, notice: 'Error during song upload.'
         end
       else
         redirect_to banddash_index_path, notice: 'Error ONLY mp3 files allowed, it ending in .mp3 does not make it a mp3 file!!!'
       end
     else
-      redirect_to banddash_index_path, notice: 'Error during song creation'
+      redirect_to banddash_index_path, notice: 'Error during song creation!'
     end
   end
 

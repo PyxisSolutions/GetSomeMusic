@@ -59,11 +59,8 @@
           <%= f.text_field :name, :placeholder => "Song name" %><br/>
           <%= f.text_field :cost, :placeholder => "Cost ( £ )" %><br/>
           <%= f.text_field :tag_list, :placeholder => "Tags, separated by commas" %><br/>
-          mp3 file: <%= f.file_field :mp3 %><br/>
-          <!-- a href="#loadingModal" role="button" data-toggle="modal" -->
-            <%#= f.submit 'Upload new track', :class => "btn btn-success" %>&nbsp;&nbsp;
-            <button type="button" onclick="showLoadModal();" class="btn btn-success">Upload new track</button>
-          <!-- /a -->
+          mp3 file: <%= f.file_field :mp3 %><br/>&nbsp;&nbsp;
+          <button type="button" onclick="showLoadModal();" class="btn btn-success">Upload new track</button>
           <button type="button" class="btn btn-danger">Cancel</button>    
         <% end %>
       </div>

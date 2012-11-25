@@ -10,8 +10,7 @@ class Song < ActiveRecord::Base
                     :dropbox_credentials => "#{Rails.root}/config/dropbox.yml",
                     #../ is beacuse gem only allows upload to dropbox's Public folder
                     :dropbox_options => { :path => proc { "../mp3/#{mp3.original_filename}"}} 
-#                    :dropbox_options => { :path => proc { "#{mp3.original_filename}"}} 
-
+                   
   before_post_process :rename_mp3
 
   
@@ -24,8 +23,6 @@ class Song < ActiveRecord::Base
   
   def rename_mp3
     extension = File.extname(mp3_file_name).downcase
-    
-    #File.binary?(self.mp3) # will require too much implementation 
     
     #how is this for code golf and overkill ?
     o =  [('a'..'z'),('A'..'Z'),(1..9)].map{|i| i.to_a}.flatten
