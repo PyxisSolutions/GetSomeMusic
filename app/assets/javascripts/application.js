@@ -16,13 +16,6 @@
 //= require_tree .
 
 $(document).ready(function(){
-    $('#lodd').jrumble({
-        rumbleEvent: 'constant',
-        rangeX: 1,
-        rangeY: 3,
-        rangeRot: 1
-    });
-    
     $('td').click(function(){
        $('.buyRow').css("background-color","white");
        $('.buyRow').css("color","black");
