@@ -64,7 +64,7 @@ class SongsController < ApplicationController
         redirect_to banddash_index_path, notice: 'Failed to delete song.' 
       end
     else
-      redirect_to banddash_index_path, notice: 'What are you doing? You can't delete songs you down own!' 
+      redirect_to banddash_index_path, notice: 'What are you doing? You cant delete songs you down own!' 
     end
   end
   
