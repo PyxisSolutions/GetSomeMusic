@@ -87,7 +87,7 @@
 <% @temp_song = Song.new %>
 <% current_user.albums.each do |album| %>
   <div id="album<%= album.id %>" class="album" onclick="$('#albumInner<%= album.id %> ').slideToggle();">
-    <div class="albumArt"><% if !album.coverart.content_type.nil? %><%= image_tag album.coverart.url, :size => "40x40" %>&nbsp;<% end %></div>
+    <div class="albumArt"><% if !album.coverart.content_type.nil? %><%= image_tag 'http://dl.dropbox.com/u/24593987/' + album.coverart_file_name, :size => "40x40" %>&nbsp;<% end %></div>
     <h4><%= album.name %></h4>
     <div id="albumInner<%= album.id %>" style="display:none;">
       <div>
