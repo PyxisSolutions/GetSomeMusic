@@ -56,11 +56,15 @@ class SongsController < ApplicationController
 
   def destroy
     @song = Song.find(params[:id])
-
-    if @song.destroy
+    
+    if @song.user_id == current_user.id
+      if @song.destroy
       redirect_to banddash_index_path, notice: 'Song deleted successfully.' 
+      else
+        redirect_to banddash_index_path, notice: 'Failed to delete song.' 
+      end
     else
-      redirect_to banddash_index_path, notice: 'Failed to delete song.' 
+      redirect_to banddash_index_path, notice: 'What are you doing? You can't delete songs you down own!' 
     end
   end
   
